@@ -12,7 +12,7 @@ using YudaSPCWebApplication.BackendServer.Data;
 namespace YudaSPCWebApplication.BackendServer.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260121070205_Initial")]
+    [Migration("20260305051916_Initial")]
     partial class Initial
     {
         /// <inheritdoc />

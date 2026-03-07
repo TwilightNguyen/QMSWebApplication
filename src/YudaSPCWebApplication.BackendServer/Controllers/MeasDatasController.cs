@@ -38,6 +38,12 @@ namespace YudaSPCWebApplication.BackendServer.Controllers
                 return BadRequest("Invalid Production.");
             }
 
+            if(request.Values.Any(x => x.CharacteristicId < 0))
+            {
+                return BadRequest("Invalid Characteristic.");
+            }
+
+
             var planType = await _context.InspPlanTypes
                 .FirstOrDefaultAsync(x => x.IntID == request.PlanTypeId);
 
@@ -49,7 +55,7 @@ namespace YudaSPCWebApplication.BackendServer.Controllers
                           join m in _context.Products.Where(x => x.BoolDeleted == false) on j.IntProductID equals m.IntID
                           join i in _context.InspectionPlans.Where(x => x.BoolDeleted == false) on m.IntInspPlanID equals i.IntID
                           join iSub in _context.InspectionPlanSubs.Where(x => x.BoolDeleted == false && x.IntPlanTypeID == request.PlanTypeId) on i.IntID equals iSub.IntInspPlanID
-                          join iDe in _context.InspectionPlanDatas.Where(x => x.BoolDeleted == false && x.IntPlanState == 2) on iSub.IntID equals iDe.IntInspPlanSubID
+                          join iDe in _context.InspectionPlanDatas.Where(x => x.BoolDeleted == false && x.IntPlanState == 1) on iSub.IntID equals iDe.IntInspPlanSubID
                           join c in _context.Characteristics on iDe.IntCharacteristicID equals c.IntID
                           into grouping
                           from inventory in grouping.DefaultIfEmpty()
@@ -61,8 +67,9 @@ namespace YudaSPCWebApplication.BackendServer.Controllers
                               USL = iDe.FtUSL,
                               LSL = iDe.FtLSL,
                           };
+
             if (productionDatas == null || !productionDatas.Any()) {
-                return BadRequest("No Production Data found.");
+                return NotFound("No Production Data found.");
             }
 
             if (request.MoldId <= 0 || request.MoldId > productionDatas.ToList()[0].Mold)
@@ -108,10 +115,14 @@ namespace YudaSPCWebApplication.BackendServer.Controllers
             {
                 NewMeasData.IntCharacteristicID = item.CharacteristicId;
                 NewMeasData.DtTimeStamp = now;
-                double Usl = await productionDatas
+
+                var productionData = await productionDatas
                     .Where(x => x.CharacteristicId == item.CharacteristicId)
-                    .Select(x => x.USL)
-                    .FirstOrDefaultAsync() ?? double.NaN;
+                    .FirstOrDefaultAsync();
+
+                if (productionData == null) {
+                    return NotFound("Not Found Characteristic In Production.");
+                }
                 
                 int count = 0;
                 foreach(var value in item.CharacteristicValue)
@@ -119,9 +130,14 @@ namespace YudaSPCWebApplication.BackendServer.Controllers
                     NewMeasData.VarCharacteristicValue = value.ToString();
                     NewMeasData.DtTimeMeasure = now.AddSeconds(count);
                     NewMeasData.DtTimeStamp = NewMeasData.DtTimeMeasure;
+                    if(value < productionData.LSL || value > productionData.USL)
+                    {
+                        NewMeasData.IntOKNG = 1;
+                        NewMeasData.IntEmailSent = 0;
+                    }
+
                     count++;
                     NewMeasDatas.Add(NewMeasData);
-
                 }
             }
 
@@ -130,10 +146,7 @@ namespace YudaSPCWebApplication.BackendServer.Controllers
 
             if(result > 0)
             {
-                return CreatedAtAction("AddMeasData", new
-                {
-                    SampleIndex = lastSampleIndex + 1,
-                });
+                return CreatedAtAction("AddMeasData", lastSampleIndex + 1);
             }
             else
             {
@@ -181,21 +194,21 @@ namespace YudaSPCWebApplication.BackendServer.Controllers
                 .FirstOrDefaultAsync(x => x.IntID == ProductionId && x.BoolDeleted == false);
 
             if (production == null) {
-                return BadRequest("Production Data Id not found.");
+                return NotFound("Production Data Id not found.");
             }
 
             var planType = await _context.InspPlanTypes
                 .FirstOrDefaultAsync(x => x.IntID == PlanTypeId);
 
             if (planType == null) {
-                return BadRequest("Plan Type not found.");
+                return NotFound("Plan Type not found.");
             }
 
             var productionDatas = from j in _context.JobDatas.Where(x => x.IntID == production.IntJobID && x.BoolDeleted == false)
                                   join m in _context.Products.Where(x => x.BoolDeleted == false) on j.IntProductID equals m.IntID
                                   join i in _context.InspectionPlans.Where(x => x.BoolDeleted == false) on m.IntInspPlanID equals i.IntID
                                   join iSub in _context.InspectionPlanSubs.Where(x => x.BoolDeleted == false && x.IntPlanTypeID == PlanTypeId) on i.IntID equals iSub.IntInspPlanID
-                                  join iDe in _context.InspectionPlanDatas.Where(x => x.BoolDeleted == false && x.IntPlanState == 2 && x.IntCharacteristicID == CharacteristicId) on iSub.IntID equals iDe.IntInspPlanSubID
+                                  join iDe in _context.InspectionPlanDatas.Where(x => x.BoolDeleted == false && x.IntPlanState == 1 && x.IntCharacteristicID == CharacteristicId) on iSub.IntID equals iDe.IntInspPlanSubID
                                   join c in _context.Characteristics on iDe.IntCharacteristicID equals c.IntID
                                   into grouping
                                   from inventory in grouping.DefaultIfEmpty()
@@ -210,18 +223,18 @@ namespace YudaSPCWebApplication.BackendServer.Controllers
 
             if(productionDatas == null || !productionDatas.Any())
             {
-                return BadRequest("Not Found Characteristic in Production.");
+                return NotFound("Not Found Characteristic in Production.");
             }
             var productionData = await productionDatas.FirstOrDefaultAsync();
 
-            if (MoldId > 0 || MoldId > productionData?.Mold)
+            if (MoldId > 0 && MoldId > productionData?.Mold)
             {
-                return BadRequest("Mold not found.");
+                return NotFound("Mold not found.");
             }
 
-            if (CavityId > 0 || CavityId > productionData?.Cavity)
+            if (CavityId > 0 && CavityId > productionData?.Cavity)
             {
-                return BadRequest("Cavity not found.");
+                return NotFound("Cavity not found.");
             }
 
             var measDatas = _context.MeasDatas
