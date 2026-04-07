@@ -33,5 +33,8 @@ namespace QMSWebApplication.BackendServer.Data.Entities
         [MaxLength(50)]
         [Column("CavityId")]
         public string? CavityId { get; set; }
+
+        [Column("DisplayOrder")]
+        public int? DisplayOrder { get; set; }
     }
 }

@@ -31,7 +31,7 @@ namespace QMSWebApplication.BackendServer.UnitTest.Controllers
             InMemoryDbContext.SeedJobDecisions(_context);
             InMemoryDbContext.SeedJobs(_context);
             InMemoryDbContext.SeedProductionPlans(_context);
-            InMemoryDbContext.SeedMeasData(_context);
+            InMemoryDbContext.SeedMeasDatas(_context);
 
             await _context.SaveChangesAsync();
         }

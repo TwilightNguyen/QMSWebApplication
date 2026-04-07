@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using QMSWebApplication.BackendServer.Data;
 using QMSWebApplication.BackendServer.Data.Entities;
 using QMSWebApplication.ViewModels;
 using QMSWebApplication.ViewModels.System.Function;
+using QMSWebApplication.ViewModels.System.InspectionPlan;
 
 namespace QMSWebApplication.BackendServer.Controllers
 {
@@ -25,6 +27,11 @@ namespace QMSWebApplication.BackendServer.Controllers
             {
                 return BadRequest(ModelState);
             }
+
+            if (String.IsNullOrWhiteSpace(request.Name)) { 
+                return BadRequest("Function name is required.");
+            }
+
             int existingFunctionCount = _context.Functions.Count(f => f.Name == request.Name);
             if (existingFunctionCount != 0)
             {
@@ -40,21 +47,42 @@ namespace QMSWebApplication.BackendServer.Controllers
                 }
             }
 
-            int maxOrderNumber = _context.Functions.Any() ? _context.Functions.Max(f => f.OrderNumber ?? 0) : 0;
+            int maxOrderNumber = _context.Functions.Any() ? _context.Functions.Max(f => f.DisplayOrder ?? 0) : 0;
 
             var function = new Functions
             {
                 Name = request.Name,
                 Url = request.Url,
-                OrderNumber = maxOrderNumber + 1,
-                ParentId = request.ParentId,
+                DisplayOrder = maxOrderNumber + 1,
+                ParentId = request.ParentId > 0 ? request.ParentId : -1,
                 UploadedDateTime = DateTimeOffset.Now,
                 Enabled = true
             };
 
             _context.Functions.Add(function);
-            await _context.SaveChangesAsync();
-            return Ok(function);
+            var result = await _context.SaveChangesAsync();
+            if(result > 0)
+            {
+                return CreatedAtAction(
+                    nameof(GetById),
+                    new { function.Id },
+                    new FunctionVm
+                    {
+                        Id = function.Id,
+                        Name = function.Name,
+                        Url = function.Url,
+                        ParentId = function.ParentId,
+                        UploadedDateTime = function.UploadedDateTime,
+                        ModifiedDateTime = function.ModifiedDateTime,
+                        Enabled = function.Enabled,
+                        DisplayOrder = function.DisplayOrder
+                    }
+                );
+            }
+            else
+            {
+                return BadRequest("Failed to create function.");
+            }
         }
 
 
@@ -65,7 +93,7 @@ namespace QMSWebApplication.BackendServer.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var functions = _context.Functions.ToList();
+            var functions = await _context.Functions.OrderBy(x => x.DisplayOrder).ToListAsync();
             if (functions == null || functions.Count == 0)
             {
                 return NotFound("No functions found.");
@@ -75,7 +103,7 @@ namespace QMSWebApplication.BackendServer.Controllers
                 Id = function.Id,
                 Name = function.Name,
                 Url = function.Url,
-                OrderNumber = function.OrderNumber,
+                DisplayOrder = function.DisplayOrder,
                 ParentId = function.ParentId > 0 ? function.ParentId : -1,
                 UploadedDateTime = function.UploadedDateTime,
                 ModifiedDateTime = function.ModifiedDateTime,
@@ -102,7 +130,7 @@ namespace QMSWebApplication.BackendServer.Controllers
                 Id = function.Id,
                 Name = function.Name,
                 Url = function.Url,
-                OrderNumber = function.OrderNumber,
+                DisplayOrder = function.DisplayOrder,
                 ParentId = function.ParentId,
                 UploadedDateTime = function.UploadedDateTime,
                 ModifiedDateTime = function.ModifiedDateTime,
@@ -127,11 +155,12 @@ namespace QMSWebApplication.BackendServer.Controllers
 
             List<FunctionVm> items = [.. query.Skip((pageIndex - 1) * pageSize)
                 .Take(pageSize)
+                .OrderBy(x => x.DisplayOrder)
                 .Select(function => new FunctionVm
                 {
                     Id = function.Id,
                     Name = function.Name,
-                    OrderNumber = function.OrderNumber,
+                    DisplayOrder = function.DisplayOrder,
                     ParentId = function.ParentId,
                     Url = function.Url,
                     UploadedDateTime = function.UploadedDateTime,
@@ -163,6 +192,11 @@ namespace QMSWebApplication.BackendServer.Controllers
                 return BadRequest(ModelState);
             }
 
+            if(String.IsNullOrWhiteSpace(request.Name))
+            {
+                return BadRequest("Function name is required.");
+            }
+
             var function = _context.Functions.FirstOrDefault(r => r.Id == Id && r.Enabled == true);
 
             if (function == null)
@@ -171,17 +205,26 @@ namespace QMSWebApplication.BackendServer.Controllers
             }
 
             var funcExists = _context.Functions.FirstOrDefault(x =>
-                x.Name == function.Name);
+                x.Name == request.Name && x.Id != Id);
 
             if (funcExists != null)
             {
                 return BadRequest("Function with the same name already exists.");
             }
 
+            if (request.ParentId != null && request.ParentId > 0)
+            {
+                var parentFunction = _context.Functions.FirstOrDefault(f => f.Id == request.ParentId);
+                if (parentFunction == null)
+                {
+                    return BadRequest("Parent function not found.");
+                }
+            }
+
             function.Name = request.Name;
             function.Url = request.Url;
             function.ModifiedDateTime = DateTimeOffset.Now; 
-            function.ParentId = request.ParentId;
+            function.ParentId = request.ParentId > 0 ? request.ParentId : -1;
 
             _context.Functions.Update(function);
 

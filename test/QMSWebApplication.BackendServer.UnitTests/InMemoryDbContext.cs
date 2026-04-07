@@ -288,21 +288,22 @@ namespace QMSWebApplication.BackendServer.UnitTest
             context.SaveChanges();
         }
 
-        public static void SeedJobs(ApplicationDbContext context) { 
+        public static void SeedJobs(ApplicationDbContext context)
+        {
             context.JobDatas.AddRange(new List<Jobs> {
-                new() { 
-                    Id = 1, 
-                    JobCode = "Job Code 1", 
-                    POCode = "PO Code 1", 
-                    SOCode = "SO Code 1", 
-                    AreaId = 1, 
-                    ProductId = 1, 
-                    JobDecisionId = 1, 
-                    PlannedQuantity = 1000, 
-                    OutputQuantity = 1000, 
-                    UploadedDateTime = DateTimeOffset.Now, 
+                new() {
+                    Id = 1,
+                    JobCode = "Job Code 1",
+                    POCode = "PO Code 1",
+                    SOCode = "SO Code 1",
+                    AreaId = 1,
+                    ProductId = 1,
+                    JobDecisionId = 1,
+                    PlannedQuantity = 1000,
+                    OutputQuantity = 1000,
+                    UploadedDateTime = DateTimeOffset.Now,
                     Enabled = true,
-                    UserId = 1 
+                    UserId = 1
                 },
                 new() {
                     Id = 2,
@@ -360,15 +361,16 @@ namespace QMSWebApplication.BackendServer.UnitTest
             context.SaveChanges();
         }
 
-        public static void SeedProductionPlans(ApplicationDbContext context) {
+        public static void SeedProductionPlans(ApplicationDbContext context)
+        {
             context.ProductionPlans.AddRange(new List<ProductionPlans>
             {
-                new(){ 
-                    Id = 1, 
-                    JobId = 1, 
-                    LineId = 1, 
-                    PlannedQuantity = 1000, 
-                    ProductionDate = DateTime.Now.AddDays(-9), 
+                new(){
+                    Id = 1,
+                    JobId = 1,
+                    LineId = 1,
+                    PlannedQuantity = 1000,
+                    ProductionDate = DateTime.Now.AddDays(-9),
                     LotInform = "Lot Inform 1",
                     MaterialInform = "Material Inform 1",
                     Notes = "Note 1",
@@ -428,7 +430,7 @@ namespace QMSWebApplication.BackendServer.UnitTest
             context.SaveChanges();
         }
 
-        public static void SeedTvDisplay(ApplicationDbContext context)
+        public static void SeedTvDisplays(ApplicationDbContext context)
         {
             context.TVDisplays.AddRange(new List<TVDisplays> {
                 new()
@@ -448,7 +450,7 @@ namespace QMSWebApplication.BackendServer.UnitTest
             context.SaveChanges();
         }
 
-        public static void SeedMeasData(ApplicationDbContext context)
+        public static void SeedMeasDatas(ApplicationDbContext context)
         {
             context.MeasDatas.AddRange(new List<Samples>
             {
@@ -663,6 +665,17 @@ namespace QMSWebApplication.BackendServer.UnitTest
                     Notes = "Note 1"
                 },
             });
+        }
+
+        public static void SeedFunctions(ApplicationDbContext context)
+        {
+            context.Functions.AddRange(new List<Functions>
+            {
+                new() { Id = 1, Name = "Function 1", Url = "/api/characterisitcs", DisplayOrder = 1, ParentId = -1, UploadedDateTime = DateTimeOffset.Now, ModifiedDateTime = null, Enabled = true},
+                new() { Id = 2, Name = "Function 2", Url = "/api/products", DisplayOrder = 2, ParentId = -1, UploadedDateTime = DateTimeOffset.Now, ModifiedDateTime = null, Enabled = true },
+                new() { Id = 3, Name = "Function 3", Url = "/api/productionplans", DisplayOrder = 3, ParentId = -1, UploadedDateTime = DateTimeOffset.Now, ModifiedDateTime = DateTimeOffset.Now, Enabled = false }
+            });
+            context.SaveChanges();
         }
     }
 }

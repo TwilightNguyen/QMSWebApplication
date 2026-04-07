@@ -17,8 +17,8 @@ namespace QMSWebApplication.BackendServer.Data.Entities
         [Column("Url", TypeName = "nvarchar(100)")]
         public required string Url { get; set; }
 
-        [Column("OrderNumber")]
-        public int? OrderNumber { get; set; }
+        [Column("DisplayOrder")]
+        public int? DisplayOrder { get; set; }
 
         [Column("ParentId")]
         public int? ParentId { get; set; }

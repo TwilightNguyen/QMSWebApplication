@@ -9,6 +9,7 @@ namespace QMSWebApplication.BackendServer.Data
     {
         public virtual DbSet<EventLogs> EventLogs { get; set; }
         public virtual DbSet<TVDisplays> TVDisplays { get; set; }
+        public virtual DbSet<TVDisplayCharts> TVDisplayCharts { get; set; }
         public virtual DbSet<Samples> MeasDatas { get; set; }
         public virtual DbSet<SampleTypes> MeasureTypes { get; set; }
         public virtual DbSet<ProductionAreas> ProductionAreas { get; set; }

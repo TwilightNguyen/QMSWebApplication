@@ -14,7 +14,7 @@ namespace QMSWebApplication.ViewModels.System.Function
 
         public required string Url { get; set; }
 
-        public int? OrderNumber { get; set; }
+        public int? DisplayOrder { get; set; }
 
         public int? ParentId { get; set; }
 
