@@ -1,6 +1,0 @@
-@YudaSPCWebApplication.BackendServer_HostAddress = http://localhost:5121
-
-GET {{YudaSPCWebApplication.BackendServer_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

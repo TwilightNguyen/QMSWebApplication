@@ -2,12 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using YudaSPCWebApplication.BackendServer.Controllers;
-using YudaSPCWebApplication.BackendServer.Data;
-using YudaSPCWebApplication.ViewModels.System.Product;
-using YudaSPCWebApplication.ViewModels.System.TVDisplay;
+using QMSWebApplication.BackendServer.Controllers;
+using QMSWebApplication.BackendServer.Data;
+using QMSWebApplication.ViewModels.System.Product;
+using QMSWebApplication.ViewModels.System.TVDisplay;
 
-namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
+namespace QMSWebApplication.BackendServer.UnitTest.Controllers
 {
     public class TVDisplaysControllerTest : IAsyncLifetime
     {
@@ -32,7 +32,7 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
             InMemoryDbContext.SeedProducts(_context);
             InMemoryDbContext.SeedJobDecisions(_context);
             InMemoryDbContext.SeedJobs(_context);
-            InMemoryDbContext.SeedProductions(_context);
+            InMemoryDbContext.SeedProductionPlans(_context);
             InMemoryDbContext.SeedTvDisplay(_context);
 
             await _context.SaveChangesAsync();

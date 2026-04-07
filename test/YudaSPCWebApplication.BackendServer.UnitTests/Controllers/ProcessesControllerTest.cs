@@ -2,12 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using YudaSPCWebApplication.BackendServer.Controllers;
-using YudaSPCWebApplication.BackendServer.Data;
-using YudaSPCWebApplication.BackendServer.Data.Entities;
-using YudaSPCWebApplication.ViewModels.System.Process;
+using QMSWebApplication.BackendServer.Controllers;
+using QMSWebApplication.BackendServer.Data;
+using QMSWebApplication.BackendServer.Data.Entities;
+using QMSWebApplication.ViewModels.System.Process;
 
-namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
+namespace QMSWebApplication.BackendServer.UnitTest.Controllers
 {
     public class ProcessesControllerTest : IAsyncLifetime
     {

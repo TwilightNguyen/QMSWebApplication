@@ -2,11 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using YudaSPCWebApplication.BackendServer.Controllers;
-using YudaSPCWebApplication.BackendServer.Data;
-using YudaSPCWebApplication.ViewModels.System.MeasData;
+using QMSWebApplication.BackendServer.Controllers;
+using QMSWebApplication.BackendServer.Data;
+using QMSWebApplication.ViewModels.System.MeasData;
 
-namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
+namespace QMSWebApplication.BackendServer.UnitTest.Controllers
 {
     public class MeasDatasControllerTest : IAsyncLifetime
     {
@@ -30,7 +30,7 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
             InMemoryDbContext.SeedProducts(_context);
             InMemoryDbContext.SeedJobDecisions(_context);
             InMemoryDbContext.SeedJobs(_context);
-            InMemoryDbContext.SeedProductions(_context);
+            InMemoryDbContext.SeedProductionPlans(_context);
             InMemoryDbContext.SeedMeasData(_context);
 
             await _context.SaveChangesAsync();
@@ -46,7 +46,7 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
         public async Task ShouldCreateInstance_NotNull_Success()
         {
             /// Act
-            var controller = new MeasDatasController(_context);
+            var controller = new SamplesController(_context);
 
             /// Assert
             Assert.NotNull(controller);
@@ -55,7 +55,7 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
         [Fact]
         public async Task CreateMeasData_ValidData_Success()
         {
-            var controller = new MeasDatasController(_context);
+            var controller = new SamplesController(_context);
 
             /// Act
             var result = await controller.CreateMeasData(new MeasDataCreateRequest
@@ -64,12 +64,12 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
                 PlanTypeId = 1,
                 MoldId = 1, 
                 CavityId = 1,
-                SampleQty = 3,
-                OutputNotes = "Create Note 1",
+                SampleQunality = 3,
+                Notes = "Create Note 1",
                 CharacteristicRange = "Create Range 1",
-                Values = new List<MeasDataValue> { 
-                    new MeasDataValue{CharacteristicId = 1, CharacteristicValue = new List<float> { 10.3f, 9f ,10f }}
-                }
+                Values = [ 
+                    new MeasDataValue{CharacteristicId = 1, CharacteristicValue = [10.3f, 9f ,10f]}
+                ]
             });
 
             /// Assert
@@ -83,7 +83,7 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
         [Fact]
         public async Task CreateMeasData_InvalidProduction_Failed()
         {
-            var controller = new MeasDatasController(_context); 
+            var controller = new SamplesController(_context); 
 
             /// Act
             var result = await controller.CreateMeasData(new MeasDataCreateRequest
@@ -92,12 +92,12 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
                 PlanTypeId = 1,
                 MoldId = 1,
                 CavityId = 1,
-                SampleQty = 3,
-                OutputNotes = "Create Note 2",
+                SampleQunality = 3,
+                Notes = "Create Note 2",
                 CharacteristicRange = "Create Range 2",
-                Values = new List<MeasDataValue> {
-                    new MeasDataValue{CharacteristicId = 1, CharacteristicValue = new List<float> { 10.3f, 9f ,10f }}
-                }
+                Values = [
+                    new() {CharacteristicId = 1, CharacteristicValue = [10.3f, 9f ,10f]}
+                ]
             });
 
             /// Assert
@@ -110,7 +110,7 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
         [Fact]
         public async Task CreateMeasData_InvalidCharacteristic_Failed()
         {
-            var controller = new MeasDatasController(_context);
+            var controller = new SamplesController(_context);
 
             /// Act
             var result = await controller.CreateMeasData(new MeasDataCreateRequest
@@ -119,12 +119,12 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
                 PlanTypeId = 1,
                 MoldId = 1,
                 CavityId = 1,
-                SampleQty = 3,
-                OutputNotes = "Create Note 3",
+                SampleQunality = 3,
+                Notes = "Create Note 3",
                 CharacteristicRange = "Create Range 3",
-                Values = new List<MeasDataValue> {
-                    new MeasDataValue{CharacteristicId = -1, CharacteristicValue = new List<float> { 10.3f, 9f ,10f }}
-                }
+                Values = [
+                    new() {CharacteristicId = -1, CharacteristicValue = [10.3f, 9f ,10f]}
+                ]
             });
 
             /// Assert
@@ -137,7 +137,7 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
         [Fact]
         public async Task CreateMeasData_InvalidPlantype_Failed()
         {
-            var controller = new MeasDatasController(_context);
+            var controller = new SamplesController(_context);
 
             /// Act
             var result = await controller.CreateMeasData(new MeasDataCreateRequest
@@ -146,12 +146,12 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
                 PlanTypeId = -2,
                 MoldId = 1,
                 CavityId = 1,
-                SampleQty = 3,
-                OutputNotes = "Create Note 4",
+                SampleQunality = 3,
+                Notes = "Create Note 4",
                 CharacteristicRange = "Create Range 4",
-                Values = new List<MeasDataValue> {
-                    new MeasDataValue{CharacteristicId = 1, CharacteristicValue = new List<float> { 10.3f, 9f ,10f }}
-                }
+                Values = [
+                    new() {CharacteristicId = 1, CharacteristicValue = [10.3f, 9f ,10f]}
+                ]
             });
 
             /// Assert
@@ -164,7 +164,7 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
         [Fact]
         public async Task CreateMeasData_NotFoundProduction_Failed()
         {
-            var controller = new MeasDatasController(_context);
+            var controller = new SamplesController(_context);
 
             /// Act
             var result = await controller.CreateMeasData(new MeasDataCreateRequest
@@ -173,12 +173,12 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
                 PlanTypeId = 3,
                 MoldId = 1,
                 CavityId = 1,
-                SampleQty = 3,
-                OutputNotes = "Create Note 5",
+                SampleQunality = 3,
+                Notes = "Create Note 5",
                 CharacteristicRange = "Create Range 5",
-                Values = new List<MeasDataValue> {
-                    new MeasDataValue{CharacteristicId = 1, CharacteristicValue = new List<float> { 10.3f, 9f ,10f }}
-                }
+                Values = [
+                    new() {CharacteristicId = 1, CharacteristicValue = [10.3f, 9f ,10f]}
+                ]
             });
 
             /// Assert
@@ -191,7 +191,7 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
         [Fact]
         public async Task CreateMeasData_InvalidMold_Failed()
         {
-            var controller = new MeasDatasController(_context);
+            var controller = new SamplesController(_context);
 
             /// Act
             var result = await controller.CreateMeasData(new MeasDataCreateRequest
@@ -200,12 +200,12 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
                 PlanTypeId = 1,
                 MoldId = 999,
                 CavityId = 1,
-                SampleQty = 3,
-                OutputNotes = "Create Note 6",
+                SampleQunality = 3,
+                Notes = "Create Note 6",
                 CharacteristicRange = "Create Range 6",
-                Values = new List<MeasDataValue> {
-                    new MeasDataValue{CharacteristicId = 1, CharacteristicValue = new List<float> { 10.3f, 9f ,10f }}
-                }
+                Values = [
+                    new() {CharacteristicId = 1, CharacteristicValue = [10.3f, 9f ,10f]}
+                ]
             });
 
             /// Assert
@@ -218,7 +218,7 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
         [Fact]
         public async Task CreateMeasData_InvalidCavity_Failed()
         {
-            var controller = new MeasDatasController(_context);
+            var controller = new SamplesController(_context);
 
             /// Act
             var result = await controller.CreateMeasData(new MeasDataCreateRequest
@@ -227,12 +227,12 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
                 PlanTypeId = 1,
                 MoldId = 1,
                 CavityId = 999,
-                SampleQty = 3,
-                OutputNotes = "Create Note 7",
+                SampleQunality = 3,
+                Notes = "Create Note 7",
                 CharacteristicRange = "Create Range 7",
-                Values = new List<MeasDataValue> {
-                    new MeasDataValue{CharacteristicId = 1, CharacteristicValue = new List<float> { 10.3f, 9f ,10f }}
-                }
+                Values = [
+                    new() {CharacteristicId = 1, CharacteristicValue = [10.3f, 9f ,10f]}
+                ]
             });
 
             /// Assert
@@ -245,7 +245,7 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
         [Fact]
         public async Task CreateMeasData_NotFoundCharacteristicInProduction_Failed()
         {
-            var controller = new MeasDatasController(_context);
+            var controller = new SamplesController(_context);
 
             /// Act
             var result = await controller.CreateMeasData(new MeasDataCreateRequest
@@ -254,12 +254,12 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
                 PlanTypeId = 1,
                 MoldId = 1,
                 CavityId = 1,
-                SampleQty = 3,
-                OutputNotes = "Create Note 8",
+                SampleQunality = 3,
+                Notes = "Create Note 8",
                 CharacteristicRange = "Create Range 8",
-                Values = new List<MeasDataValue> {
-                    new MeasDataValue{CharacteristicId = 999, CharacteristicValue = new List<float> { 10.3f, 9f ,10f }}
-                }
+                Values = [
+                    new() {CharacteristicId = 999, CharacteristicValue = [10.3f, 9f ,10f]}
+                ]
             });
 
             /// Assert
@@ -272,7 +272,7 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
         [Fact]
         public async Task GetProductionIdAndCharacteristicIdAndPlanTypeIdAndMoldIdAndCavityId_ValidData_Success()
         {
-            var controller = new MeasDatasController(_context);
+            var controller = new SamplesController(_context);
 
             /// Act
             var result = await controller.GetProductionIdAndCharacteristicIdAndPlanTypeIdAndMoldIdAndCavityId(
@@ -292,7 +292,7 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
         [Fact]
         public async Task GetProductionIdAndCharacteristicIdAndPlanTypeIdAndMoldIdAndCavityId_InvalidProduction_Failed()
         {
-            var controller = new MeasDatasController(_context);
+            var controller = new SamplesController(_context);
 
             /// Act
             var result = await controller.GetProductionIdAndCharacteristicIdAndPlanTypeIdAndMoldIdAndCavityId(
@@ -309,7 +309,7 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
         [Fact]
         public async Task GetProductionIdAndCharacteristicIdAndPlanTypeIdAndMoldIdAndCavityId_InvalidCharacteristic_Failed()
         {
-            var controller = new MeasDatasController(_context);
+            var controller = new SamplesController(_context);
 
             /// Act
             var result = await controller.GetProductionIdAndCharacteristicIdAndPlanTypeIdAndMoldIdAndCavityId(
@@ -326,7 +326,7 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
         [Fact]
         public async Task GetProductionIdAndCharacteristicIdAndPlanTypeIdAndMoldIdAndCavityId_InvalidPlantype_Failed()
         {
-            var controller = new MeasDatasController(_context);
+            var controller = new SamplesController(_context);
 
             /// Act
             var result = await controller.GetProductionIdAndCharacteristicIdAndPlanTypeIdAndMoldIdAndCavityId(
@@ -343,7 +343,7 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
         [Fact]
         public async Task GetProductionIdAndCharacteristicIdAndPlanTypeIdAndMoldIdAndCavityId_InvalidMold_Failed()
         {
-            var controller = new MeasDatasController(_context);
+            var controller = new SamplesController(_context);
 
             /// Act
             var result = await controller.GetProductionIdAndCharacteristicIdAndPlanTypeIdAndMoldIdAndCavityId(
@@ -360,7 +360,7 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
         [Fact]
         public async Task GetProductionIdAndCharacteristicIdAndPlanTypeIdAndMoldIdAndCavityId_InvalidCavity_Failed()
         {
-            var controller = new MeasDatasController(_context);
+            var controller = new SamplesController(_context);
 
             /// Act
             var result = await controller.GetProductionIdAndCharacteristicIdAndPlanTypeIdAndMoldIdAndCavityId(
@@ -377,7 +377,7 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
         [Fact]
         public async Task GetProductionIdAndCharacteristicIdAndPlanTypeIdAndMoldIdAndCavityId_NotFoundCharacteristicInProduction_Failed()
         {
-            var controller = new MeasDatasController(_context);
+            var controller = new SamplesController(_context);
 
             /// Act
             var result = await controller.GetProductionIdAndCharacteristicIdAndPlanTypeIdAndMoldIdAndCavityId(
@@ -394,7 +394,7 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
         [Fact]
         public async Task GetProductionIdAndCharacteristicIdAndPlanTypeIdAndMoldIdAndCavityId_NotFoundProduction_Failed()
         {
-            var controller = new MeasDatasController(_context);
+            var controller = new SamplesController(_context);
 
             /// Act
             var result = await controller.GetProductionIdAndCharacteristicIdAndPlanTypeIdAndMoldIdAndCavityId(
@@ -411,7 +411,7 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
         [Fact]
         public async Task GetProductionIdAndCharacteristicIdAndPlanTypeIdAndMoldIdAndCavityId_NotFoundPlanType_Failed()
         {
-            var controller = new MeasDatasController(_context);
+            var controller = new SamplesController(_context);
 
             /// Act
             var result = await controller.GetProductionIdAndCharacteristicIdAndPlanTypeIdAndMoldIdAndCavityId(
@@ -428,7 +428,7 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
         [Fact]
         public async Task GetProductionIdAndCharacteristicIdAndPlanTypeIdAndMoldIdAndCavityId_NotFoundMoldInProduction_Failed()
         {
-            var controller = new MeasDatasController(_context);
+            var controller = new SamplesController(_context);
 
             /// Act
             var result = await controller.GetProductionIdAndCharacteristicIdAndPlanTypeIdAndMoldIdAndCavityId(
@@ -445,7 +445,7 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
         [Fact]
         public async Task GetProductionIdAndCharacteristicIdAndPlanTypeIdAndMoldIdAndCavityId_NotFoundCavityInProduction_Failed()
         {
-            var controller = new MeasDatasController(_context);
+            var controller = new SamplesController(_context);
 
             /// Act
             var result = await controller.GetProductionIdAndCharacteristicIdAndPlanTypeIdAndMoldIdAndCavityId(
@@ -462,7 +462,7 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
         [Fact]
         public async Task DeleteMeasData_ValidData_Success()
         {
-            var controller = new MeasDatasController(_context);
+            var controller = new SamplesController(_context);
 
             /// Act
             var result = await controller.DeleteMeasData(1);
@@ -479,7 +479,7 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
         [Fact]
         public async Task DeleteMeasData_InvalidMeasurementData_Failed()
         {
-            var controller = new MeasDatasController(_context);
+            var controller = new SamplesController(_context);
 
             /// Act
             var result = await controller.DeleteMeasData(-1);
@@ -494,7 +494,7 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
         [Fact]
         public async Task DeleteMeasData_NotFoundMeasurementData_Failed()
         {
-            var controller = new MeasDatasController(_context);
+            var controller = new SamplesController(_context);
 
             /// Act
             var result = await controller.DeleteMeasData(999);

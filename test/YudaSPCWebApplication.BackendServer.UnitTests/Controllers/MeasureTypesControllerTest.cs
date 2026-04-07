@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using YudaSPCWebApplication.BackendServer.Controllers;
-using YudaSPCWebApplication.BackendServer.Data;
-using YudaSPCWebApplication.ViewModels.System.MeasureType;
+using QMSWebApplication.BackendServer.Controllers;
+using QMSWebApplication.BackendServer.Data;
+using QMSWebApplication.ViewModels.System.MeasureType;
 
-namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
+namespace QMSWebApplication.BackendServer.UnitTest.Controllers
 {
     public class MeasureTypesControllerTest : IAsyncLifetime
     {
@@ -34,7 +34,7 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
         public void ShouldCreateInstance_NotNull_Success()
         {
             // Act
-            var controller = new MeasureTypesController(_context);
+            var controller = new SampleTypesController(_context);
             // Assert
             Assert.NotNull(controller);
         }
@@ -42,7 +42,7 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
         [Fact]
         public async Task GetAll_HasData_Success()
         {
-            var controller = new MeasureTypesController(_context);
+            var controller = new SampleTypesController(_context);
             // Act
             var result = await controller.GetAll();
             // Assert
@@ -59,7 +59,7 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
         [Fact]
         public async Task GetById_HasData_Success()
         {
-            var controller = new MeasureTypesController(_context);
+            var controller = new SampleTypesController(_context);
             // Act
             var result = await controller.GetById(1);
             // Assert
@@ -73,7 +73,7 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
         [Fact]
         public async Task CreateMeasureType_ValidData_Success()
         {
-            var controller = new MeasureTypesController(_context);
+            var controller = new SampleTypesController(_context);
             var request = new MeasureTypeCreateRequest
             {
                 Name = "Pressure"
@@ -92,7 +92,7 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
         [Fact]
         public async Task CreateMeasureType_DuplicateName_BadRequest()
         {
-            var controller = new MeasureTypesController(_context);
+            var controller = new SampleTypesController(_context);
             var request = new MeasureTypeCreateRequest
             {
                 Name = "Length" // Already exists in seeded data
@@ -109,7 +109,7 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
         [Fact]
         public async Task CreateMeasureType_EmptyName_BadRequest()
         {
-            var controller = new MeasureTypesController(_context);
+            var controller = new SampleTypesController(_context);
             var request = new MeasureTypeCreateRequest
             {
                 Name = "" // Empty name
@@ -126,7 +126,7 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
         [Fact]
         public async Task CreateMeasureType_NullName_BadRequest()
         {
-            var controller = new MeasureTypesController(_context);
+            var controller = new SampleTypesController(_context);
             var request = new MeasureTypeCreateRequest
             {
                 Name = string.Empty // Use empty string instead of null to satisfy non-nullable property
@@ -143,7 +143,7 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
         [Fact]
         public async Task UpdateMeasureType_ValidData_Success()
         {
-            var controller = new MeasureTypesController(_context);
+            var controller = new SampleTypesController(_context);
             var request = new MeasureTypeVm
             {
                 Id = 1,
@@ -163,7 +163,7 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
         [Fact]
         public async Task UpdateMeasureType_NonExistentId_NotFound()
         {
-            var controller = new MeasureTypesController(_context);
+            var controller = new SampleTypesController(_context);
             var request = new MeasureTypeVm
             {
                 Id = 999, // Non-existent ID
@@ -181,7 +181,7 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
         [Fact]
         public async Task UpdateMeasureType_DuplicateName_BadRequest()
         {
-            var controller = new MeasureTypesController(_context);
+            var controller = new SampleTypesController(_context);
             var request = new MeasureTypeVm
             {
                 Id = 1,
@@ -199,7 +199,7 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
         [Fact]
         public async Task UpdateMeasureType_EmptyName_BadRequest()
         {
-            var controller = new MeasureTypesController(_context);
+            var controller = new SampleTypesController(_context);
             var request = new MeasureTypeVm
             {
                 Id = 1,
@@ -217,7 +217,7 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
         [Fact]
         public async Task UpdateMeasureType_NullName_BadRequest()
         {
-            var controller = new MeasureTypesController(_context);
+            var controller = new SampleTypesController(_context);
             var request = new MeasureTypeVm
             {
                 Id = 1,
@@ -235,7 +235,7 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
         [Fact]
         public async Task DeleteMeasureType_ValidId_Success()
         {
-            var controller = new MeasureTypesController(_context);
+            var controller = new SampleTypesController(_context);
             // Act
             var result = await controller.DeleteMeasureType(2);
             // Assert
@@ -250,7 +250,7 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
         [Fact]
         public async Task DeleteMeasureType_NonExistentId_NotFound()
         {
-            var controller = new MeasureTypesController(_context);
+            var controller = new SampleTypesController(_context);
             // Act
             var result = await controller.DeleteMeasureType(999); // Non-existent ID
             // Assert

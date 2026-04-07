@@ -5,9 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Text;
-using YudaSPCWebApplication.BackendServer.Services;
+using QMSWebApplication.BackendServer.Services;
 
-namespace YudaSPCWebApplication.BackendServer.UnitTest.Services
+namespace QMSWebApplication.BackendServer.UnitTest.Services
 {
     public class ClientIpAccessorServiceTest
     {

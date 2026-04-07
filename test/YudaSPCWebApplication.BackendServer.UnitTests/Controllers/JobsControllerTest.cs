@@ -5,14 +5,14 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using YudaSPCWebApplication.BackendServer.Controllers;
-using YudaSPCWebApplication.BackendServer.Data;
-using YudaSPCWebApplication.BackendServer.Data.Entities;
-using YudaSPCWebApplication.ViewModels;
+using QMSWebApplication.BackendServer.Controllers;
+using QMSWebApplication.BackendServer.Data;
+using QMSWebApplication.BackendServer.Data.Entities;
+using QMSWebApplication.ViewModels;
 using Microsoft.Extensions.Options;
-using YudaSPCWebApplication.ViewModels.System.Job;
+using QMSWebApplication.ViewModels.System.Job;
 
-namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
+namespace QMSWebApplication.BackendServer.UnitTest.Controllers
 {
     public class JobsControllerTest : IAsyncLifetime
     {
@@ -155,8 +155,8 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
                 JobCode = "Job Code 1 New",
                 POCode = "PO Code 1 New",
                 SOCode = "SO Code 1 New",
-                JobQty = 1000,
-                OutputQty = 1000,
+                PlannedQuantity = 1000,
+                OutputQuanlity = 1000,
             };
 
             // Act
@@ -171,8 +171,8 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
             Assert.Equal("Job Code 1 New", jobVm?.JobCode);
             Assert.Equal("PO Code 1 New", jobVm?.POCode);
             Assert.Equal("SO Code 1 New", jobVm?.SOCode);
-            Assert.Equal(1000, jobVm?.JobQty);
-            Assert.Equal(1000, jobVm?.OutputQty);
+            Assert.Equal(1000, jobVm?.PlannedQuanlity);
+            Assert.Equal(1000, jobVm?.OutputQuanlity);
             Assert.Equal(1, jobVm?.AreaId);
             Assert.Equal(1, jobVm?.ProductId);
         }
@@ -189,8 +189,8 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
                 JobCode = string.Empty,
                 POCode = "PO Code 2 New",
                 SOCode = "SO Code 2 New",
-                JobQty = 1000,
-                OutputQty = 1000,
+                PlannedQuantity = 1000,
+                OutputQuanlity = 1000,
             };
             // Act
             var result = await controller.CreateJob(request);
@@ -215,8 +215,8 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
                 JobCode = "Job Code 3 New",
                 POCode = "PO Code 3 New",
                 SOCode = "SO Code 3 New",
-                JobQty = 1000,
-                OutputQty = 1000,
+                PlannedQuantity = 1000,
+                OutputQuanlity = 1000,
             };
 
             // Act
@@ -242,8 +242,8 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
                 JobCode = "Job Code 4 New",
                 POCode = "PO Code 4 New",
                 SOCode = "SO Code 4 New",
-                JobQty = 1000,
-                OutputQty = 1000,
+                PlannedQuantity = 1000,
+                OutputQuanlity = 1000,
             };
 
             // Act
@@ -269,8 +269,8 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
                 JobCode = "Job Code 1",
                 POCode = "PO Code 5 New",
                 SOCode = "SO Code 5 New",
-                JobQty = 1000,
-                OutputQty = 1000,
+                PlannedQuantity = 1000,
+                OutputQuanlity = 1000,
             };
 
             // Act
@@ -297,8 +297,8 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
                 JobCode = "Job Code 1 Update",
                 POCode = "PO Code 1 Update",
                 SOCode = "SO Code 1 Update",
-                JobQty = 2000,
-                OutputQty = 3000,
+                PlannedQuanlity = 2000,
+                OutputQuanlity = 3000,
                 JobDecisionId = 2,
             };
 
@@ -315,8 +315,8 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
             Assert.Equal("Job Code 1 Update", job.JobCode);
             Assert.Equal("PO Code 1 Update", job.POCode);
             Assert.Equal("SO Code 1 Update", job.SOCode);
-            Assert.Equal(2000, job.JobQty);
-            Assert.Equal(3000, job.OutputQty);
+            Assert.Equal(2000, job.PlannedQuanlity);
+            Assert.Equal(3000, job.OutputQuanlity);
         }
 
         [Fact]
@@ -332,8 +332,8 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
                 JobCode = "Job Code 2 Update",
                 POCode = "PO Code 2 Update",
                 SOCode = "SO Code 2 Update",
-                JobQty = 2000,
-                OutputQty = 3000,
+                PlannedQuanlity = 2000,
+                OutputQuanlity = 3000,
                 JobDecisionId = 2,
             };
 
@@ -360,8 +360,8 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
                 JobCode = "Job Code 2 Update",
                 POCode = "PO Code 2 Update",
                 SOCode = "SO Code 2 Update",
-                JobQty = 2000,
-                OutputQty = 3000,
+                PlannedQuanlity = 2000,
+                OutputQuanlity = 3000,
                 JobDecisionId = 2,
             };
 
@@ -388,8 +388,8 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
                 JobCode = "Job Code 3",
                 POCode = "PO Code 2 Update",
                 SOCode = "SO Code 2 Update",
-                JobQty = 2000,
-                OutputQty = 3000,
+                PlannedQuanlity = 2000,
+                OutputQuanlity = 3000,
                 JobDecisionId = 2,
             };
 

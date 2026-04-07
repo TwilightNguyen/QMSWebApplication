@@ -3,28 +3,28 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moq;
-using YudaSPCWebApplication.BackendServer.Controllers;
-using YudaSPCWebApplication.BackendServer.Data.Entities;
-using YudaSPCWebApplication.ViewModels;
+using QMSWebApplication.BackendServer.Controllers;
+using QMSWebApplication.BackendServer.Data.Entities;
+using QMSWebApplication.ViewModels;
 using MockQueryable;
-using YudaSPCWebApplication.ViewModels.System.Role;
+using QMSWebApplication.ViewModels.System.Role;
 
-namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
+namespace QMSWebApplication.BackendServer.UnitTest.Controllers
 {
     public class RolesControllerTest
     { 
-        private readonly Mock<RoleManager<Role>> _mockRoleManager;
-        private readonly List<Role> _rolesSource;
+        private readonly Mock<RoleManager<Roles>> _mockRoleManager;
+        private readonly List<Roles> _rolesSource;
 
         public RolesControllerTest() {
             // Arrange
-            var store = new Mock<IRoleStore<Role>>();
-            var roleValidators = new List<IRoleValidator<Role>>(); // can stay empty
+            var store = new Mock<IRoleStore<Roles>>();
+            var roleValidators = new List<IRoleValidator<Roles>>(); // can stay empty
             var keyNormalizer = new Mock<ILookupNormalizer>();
             var errorDescriber = new IdentityErrorDescriber();
-            var logger = new Mock<ILogger<RoleManager<Role>>>();
+            var logger = new Mock<ILogger<RoleManager<Roles>>>();
 
-            _mockRoleManager = new Mock<RoleManager<Role>>(
+            _mockRoleManager = new Mock<RoleManager<Roles>>(
                 store.Object,
                 roleValidators,
                 keyNormalizer.Object,
@@ -57,7 +57,7 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
         [Fact]
         public async Task CreateRole_ValidInput_Success()
         {
-            _mockRoleManager.Setup(rm => rm.CreateAsync(It.IsAny<Role>()))
+            _mockRoleManager.Setup(rm => rm.CreateAsync(It.IsAny<Roles>()))
                 .ReturnsAsync(IdentityResult.Success);
             
             // Act
@@ -79,13 +79,13 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
 
             // Verify RoleManager was NEVER called
             _mockRoleManager.Verify(rm => rm.RoleExistsAsync(It.IsAny<string>()), Times.Once);
-            _mockRoleManager.Verify(rm => rm.CreateAsync(It.IsAny<Role>()), Times.Once);
+            _mockRoleManager.Verify(rm => rm.CreateAsync(It.IsAny<Roles>()), Times.Once);
         }
 
         [Fact]
         public async Task CreateRole_ValidInput_Failed()
         {
-            _mockRoleManager.Setup(rm => rm.CreateAsync(It.IsAny<Role>()))
+            _mockRoleManager.Setup(rm => rm.CreateAsync(It.IsAny<Roles>()))
                 .ReturnsAsync(IdentityResult.Failed([]));
 
             // Act
@@ -107,7 +107,7 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
 
             // Verify RoleManager was NEVER called
             _mockRoleManager.Verify(rm => rm.RoleExistsAsync(It.IsAny<string>()), Times.Never);
-            _mockRoleManager.Verify(rm => rm.CreateAsync(It.IsAny<Role>()), Times.Never);
+            _mockRoleManager.Verify(rm => rm.CreateAsync(It.IsAny<Roles>()), Times.Never);
         }
 
         [Fact]
@@ -237,7 +237,7 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
             _mockRoleManager.Setup(rm => rm.Roles)
                 .Returns(_rolesSource.BuildMock());
 
-            _mockRoleManager.Setup(rm => rm.UpdateAsync(It.IsAny<Role>()))
+            _mockRoleManager.Setup(rm => rm.UpdateAsync(It.IsAny<Roles>()))
                 .ReturnsAsync(IdentityResult.Success);
 
             // Act
@@ -261,7 +261,7 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
 
             _mockRoleManager.VerifyGet(rm => rm.Roles, Times.Once);
             //_mockRoleManager.Verify(rm => rm.Roles.FirstOrDefault(It.IsAny<Role>()), Times.Once);
-            _mockRoleManager.Verify(rm => rm.UpdateAsync(It.IsAny<Role>()), Times.Once);
+            _mockRoleManager.Verify(rm => rm.UpdateAsync(It.IsAny<Roles>()), Times.Once);
         }
 
         [Fact]
@@ -269,7 +269,7 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
         {
             _mockRoleManager.Setup(rm => rm.Roles)
                 .Returns(_rolesSource.BuildMock());
-            _mockRoleManager.Setup(rm => rm.UpdateAsync(It.IsAny<Role>()))
+            _mockRoleManager.Setup(rm => rm.UpdateAsync(It.IsAny<Roles>()))
                 .ReturnsAsync(IdentityResult.Failed([]));
 
             // Act
@@ -292,7 +292,7 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
 
             // Verify RoleManager was NEVER called
             _mockRoleManager.VerifyGet(rm => rm.Roles, Times.Never);
-            _mockRoleManager.Verify(rm => rm.UpdateAsync(It.IsAny<Role>()), Times.Never);
+            _mockRoleManager.Verify(rm => rm.UpdateAsync(It.IsAny<Roles>()), Times.Never);
         }
 
         [Fact]
@@ -300,7 +300,7 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
         {
             _mockRoleManager.Setup(rm => rm.Roles)
                 .Returns(_rolesSource.BuildMock());
-            _mockRoleManager.Setup(rm => rm.UpdateAsync(It.IsAny<Role>()))
+            _mockRoleManager.Setup(rm => rm.UpdateAsync(It.IsAny<Roles>()))
                 .ReturnsAsync(IdentityResult.Failed([]));
 
             // Act
@@ -324,7 +324,7 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
             // Verify RoleManager was called
             _mockRoleManager.VerifyGet(rm => rm.Roles, Times.Once);
             // Verify RoleManager was NEVER called
-            _mockRoleManager.Verify(rm => rm.UpdateAsync(It.IsAny<Role>()), Times.Never);
+            _mockRoleManager.Verify(rm => rm.UpdateAsync(It.IsAny<Roles>()), Times.Never);
         }
 
         [Fact]
@@ -333,7 +333,7 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
             _mockRoleManager.Setup(rm => rm.Roles)
                 .Returns(_rolesSource.BuildMock());
 
-            _mockRoleManager.Setup(rm => rm.DeleteAsync(It.IsAny<Role>()))
+            _mockRoleManager.Setup(rm => rm.DeleteAsync(It.IsAny<Roles>()))
                 .ReturnsAsync(IdentityResult.Success);
 
             // Act
@@ -350,7 +350,7 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
 
             _mockRoleManager.VerifyGet(rm => rm.Roles, Times.Once);
             //_mockRoleManager.Verify(rm => rm.Roles.FirstOrDefault(It.IsAny<Role>()), Times.Once);
-            _mockRoleManager.Verify(rm => rm.DeleteAsync(It.IsAny<Role>()), Times.Once);
+            _mockRoleManager.Verify(rm => rm.DeleteAsync(It.IsAny<Roles>()), Times.Once);
         }
 
 
@@ -359,7 +359,7 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
         {
             _mockRoleManager.Setup(rm => rm.Roles)
                 .Returns(_rolesSource.BuildMock());
-            _mockRoleManager.Setup(rm => rm.DeleteAsync(It.IsAny<Role>()))
+            _mockRoleManager.Setup(rm => rm.DeleteAsync(It.IsAny<Roles>()))
                 .ReturnsAsync(IdentityResult.Failed([]));
 
             // Act
@@ -376,7 +376,7 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
             // Verify RoleManager was called
             _mockRoleManager.VerifyGet(rm => rm.Roles, Times.Once);
             // Verify RoleManager was NEVER called
-            _mockRoleManager.Verify(rm => rm.DeleteAsync(It.IsAny<Role>()), Times.Never);
+            _mockRoleManager.Verify(rm => rm.DeleteAsync(It.IsAny<Roles>()), Times.Never);
         }
     }
 }

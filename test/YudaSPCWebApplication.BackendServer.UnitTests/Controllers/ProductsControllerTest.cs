@@ -4,13 +4,13 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Xml.Linq;
-using YudaSPCWebApplication.BackendServer.Controllers;
-using YudaSPCWebApplication.BackendServer.Data;
-using YudaSPCWebApplication.ViewModels;
-using YudaSPCWebApplication.ViewModels.System.Product;
+using QMSWebApplication.BackendServer.Controllers;
+using QMSWebApplication.BackendServer.Data;
+using QMSWebApplication.ViewModels;
+using QMSWebApplication.ViewModels.System.Product;
 using static Azure.Core.HttpHeader;
 
-namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
+namespace QMSWebApplication.BackendServer.UnitTest.Controllers
 {
     public class ProductsControllerTest : IAsyncLifetime
     {
@@ -179,8 +179,8 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
                 InspPlanId = 1,
                 Name = "Product New 01",
                 ModelInternal = "Model New 01",
-                MoldQty = 2,
-                CavityQty = 4,
+                MoldQuanlity = 2,
+                CavityQuanlity = 4,
                 Notes = "Note New 01",
                 Description = "Description New 01",
                 CustomerName = "Customer name New 01"
@@ -198,8 +198,8 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
             Assert.Equal( 1,product.InspPlanId);
             Assert.Equal("Product New 01", product.Name);
             Assert.Equal("Model New 01", product.ModelInternal);
-            Assert.Equal(2, product.MoldQty);
-            Assert.Equal(4, product.CavityQty);
+            Assert.Equal(2, product.MoldQuanlity);
+            Assert.Equal(4, product.CavityQuanlity);
             Assert.Equal("Note New 01", product.Notes);
             Assert.Equal("Description New 01", product.Description);
             Assert.Equal("Customer name New 01", product.CustomerName);
@@ -216,8 +216,8 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
                 InspPlanId = 1,
                 Name = string.Empty,
                 ModelInternal = "Model New 02",
-                MoldQty = 2,
-                CavityQty = 4,
+                MoldQuanlity = 2,
+                CavityQuanlity = 4,
                 Notes = "Note New 02",
                 Description = "Description New 02",
                 CustomerName = "Customer name New 02"
@@ -244,8 +244,8 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
                 InspPlanId = 3,
                 Name = "Product 03",
                 ModelInternal = "Model New 03",
-                MoldQty = 2,
-                CavityQty = 4,
+                MoldQuanlity = 2,
+                CavityQuanlity = 4,
                 Notes = "Note New 03",
                 Description = "Description New 03",
                 CustomerName = "Customer name New 03"
@@ -273,8 +273,8 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
                     InspPlanId = 1,
                     Name = "Product 01 Updated",
                     ModelInternal = "Model Internal 01 Updated",
-                    MoldQty = 3,
-                    CavityQty = 5,
+                    MoldQuanlity = 3,
+                    CavityQuanlity = 5,
                     Description = "Description 01 Updated",
                     Notes = "Notes 01 Updated",
                     CustomerName = "Customer Name 01 Updated",
@@ -288,8 +288,8 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
             Assert.NotNull(product);
             Assert.Equal("Product 01 Updated", product?.Name);
             Assert.Equal("Model Internal 01 Updated", product?.ModelInternal); 
-            Assert.Equal(3, product?.MoldQty); 
-            Assert.Equal(5, product?.CavityQty);
+            Assert.Equal(3, product?.MoldQuanlity); 
+            Assert.Equal(5, product?.CavityQuanlity);
             Assert.Equal("Description 01 Updated", product?.Description); 
             Assert.Equal("Notes 01 Updated", product?.Notes); 
             Assert.Equal("Customer Name 01 Updated", product?.CustomerName); 
@@ -307,8 +307,8 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
                     InspPlanId = 1,
                     Name = "Product 02 Updated",
                     ModelInternal = "Model Internal 02 Updated",
-                    MoldQty = 3,
-                    CavityQty = 5,
+                    MoldQuanlity = 3,
+                    CavityQuanlity = 5,
                     Description = "Description 02 Updated",
                     Notes = "Notes 02 Updated",
                     CustomerName = "Customer Name 02 Updated",
@@ -336,8 +336,8 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
                     InspPlanId = 1,
                     Name = "Product 999 Updated",
                     ModelInternal = "Model Internal 999 Updated",
-                    MoldQty = 3,
-                    CavityQty = 5,
+                    MoldQuanlity = 3,
+                    CavityQuanlity = 5,
                     Description = "Description 999 Updated",
                     Notes = "Notes 999 Updated",
                     CustomerName = "Customer Name 999 Updated",
@@ -364,8 +364,8 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
                     InspPlanId = 1,
                     Name = "Product 02",
                     ModelInternal = "Model Internal 02 Updated",
-                    MoldQty = 3,
-                    CavityQty = 5,
+                    MoldQuanlity = 3,
+                    CavityQuanlity = 5,
                     Description = "Description 02 Updated",
                     Notes = "Notes 02 Updated",
                     CustomerName = "Customer Name 02 Updated",
@@ -391,8 +391,8 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
                     InspPlanId = 1,
                     Name = string.Empty,
                     ModelInternal = "Model Internal 03 Updated",
-                    MoldQty = 3,
-                    CavityQty = 5,
+                    MoldQuanlity = 3,
+                    CavityQuanlity = 5,
                     Description = "Description 03 Updated",
                     Notes = "Notes 03 Updated",
                     CustomerName = "Cusmomer Name 03 Updated",
@@ -425,8 +425,8 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
             Assert.Equal(3, product?.InspPlanId);
             Assert.Equal("Product 04", product?.Name);
             Assert.Equal("Model Test 04", product?.ModelInternal);
-            Assert.Equal(4, product?.MoldQty);
-            Assert.Equal(6, product?.CavityQty);
+            Assert.Equal(4, product?.MoldQuanlity);
+            Assert.Equal(6, product?.CavityQuanlity);
             Assert.Equal("Description 04", product?.Description);
             Assert.Equal("Notes 04", product?.Notes);
             Assert.Equal("Customer 04", product?.CustomerName);

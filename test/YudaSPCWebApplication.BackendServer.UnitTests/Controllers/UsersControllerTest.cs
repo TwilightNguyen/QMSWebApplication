@@ -4,20 +4,20 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MockQueryable;
 using Moq;
-using YudaSPCWebApplication.BackendServer.Controllers;
-using YudaSPCWebApplication.BackendServer.Data.Entities;
-using YudaSPCWebApplication.ViewModels;
-using YudaSPCWebApplication.ViewModels.System.User;
+using QMSWebApplication.BackendServer.Controllers;
+using QMSWebApplication.BackendServer.Data.Entities;
+using QMSWebApplication.ViewModels;
+using QMSWebApplication.ViewModels.System.User;
 
-namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
+namespace QMSWebApplication.BackendServer.UnitTest.Controllers
 {
     public class UsersControllerTest
     {
         private readonly Mock<UserManager<User>> _mockUserManager;
         private readonly List<User> _usersSource;
 
-        private readonly Mock<RoleManager<Role>> _mockRoleManager;
-        private readonly List<Role> _rolesSource;
+        private readonly Mock<RoleManager<Roles>> _mockRoleManager;
+        private readonly List<Roles> _rolesSource;
 
         public UsersControllerTest()
         {
@@ -169,13 +169,13 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
             ];
 
             // Mock RoleManager
-            var rStore = new Mock<IRoleStore<Role>>();
-            var rRoleValidators = new List<IRoleValidator<Role>>(); // can stay empty
+            var rStore = new Mock<IRoleStore<Roles>>();
+            var rRoleValidators = new List<IRoleValidator<Roles>>(); // can stay empty
             var rKeyNormalizer = new Mock<ILookupNormalizer>();
             var rErrorDescriber = new IdentityErrorDescriber();
-            var rLogger = new Mock<ILogger<RoleManager<Role>>>();
+            var rLogger = new Mock<ILogger<RoleManager<Roles>>>();
 
-            _mockRoleManager = new Mock<RoleManager<Role>>(
+            _mockRoleManager = new Mock<RoleManager<Roles>>(
                 rStore.Object,
                 rRoleValidators,
                 rKeyNormalizer.Object,
@@ -411,7 +411,7 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
                 Department = "OT",
                 StaffID = "A002",
                 EmailAddress = "admin1@gmail.com",
-                Enable = 1,
+                Enabled = 1,
                 UserID = 1,
             });
 
@@ -444,7 +444,7 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
                 Department = "OT",
                 StaffID = "A002",
                 EmailAddress = "admin1@gmail.com",
-                Enable = 1,
+                Enabled = 1,
                 UserID = 1,
             });
 
@@ -476,7 +476,7 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
                 Department = "OT",
                 StaffID = "A002",
                 EmailAddress = "admin1@gmail.com",
-                Enable = 1,
+                Enabled = 1,
                 UserID = 10,
             });
 

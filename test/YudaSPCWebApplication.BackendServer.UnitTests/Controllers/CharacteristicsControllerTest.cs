@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using YudaSPCWebApplication.BackendServer.Controllers;
-using YudaSPCWebApplication.BackendServer.Data;
-using YudaSPCWebApplication.ViewModels;
-using YudaSPCWebApplication.ViewModels.System.Characteristic;
+using QMSWebApplication.BackendServer.Controllers;
+using QMSWebApplication.BackendServer.Data;
+using QMSWebApplication.ViewModels;
+using QMSWebApplication.ViewModels.System.Characteristic;
 
-namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
+namespace QMSWebApplication.BackendServer.UnitTest.Controllers
 {
     public class CharacteristicControllerTest : IAsyncLifetime
     {
@@ -56,9 +56,9 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
             var characteristicsList = okResult?.Value as IEnumerable<CharacteristicVm>;
 
             Assert.Equal(3, characteristicsList?.Count());
-            Assert.Contains(characteristicsList!, a => a.CharacteristicName == "Characteristic A");
-            Assert.Contains(characteristicsList!, a => a.CharacteristicName == "Characteristic B");
-            Assert.Contains(characteristicsList!, a => a.CharacteristicName == "Characteristic C");
+            Assert.Contains(characteristicsList!, a => a.Name == "Characteristic A");
+            Assert.Contains(characteristicsList!, a => a.Name == "Characteristic B");
+            Assert.Contains(characteristicsList!, a => a.Name == "Characteristic C");
         }
 
         [Fact]
@@ -72,7 +72,7 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
             var okResult = result as OkObjectResult;
             var characteristic = okResult?.Value as CharacteristicVm;
             Assert.NotNull(characteristic);
-            Assert.Equal("Characteristic A", characteristic?.CharacteristicName);
+            Assert.Equal("Characteristic A", characteristic?.Name);
         }
 
         [Fact]
@@ -100,8 +100,8 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
             var characteristicsList = okResult?.Value as IEnumerable<CharacteristicVm>;
             Assert.NotNull(characteristicsList);
             Assert.Equal(2, characteristicsList?.Count());
-            Assert.Contains(characteristicsList!, a => a.CharacteristicName == "Characteristic A");
-            Assert.Contains(characteristicsList!, a => a.CharacteristicName == "Characteristic B");
+            Assert.Contains(characteristicsList!, a => a.Name == "Characteristic A");
+            Assert.Contains(characteristicsList!, a => a.Name == "Characteristic B");
         }
 
         [Fact]
@@ -146,7 +146,7 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
             Assert.NotNull(pagedResult);
             Assert.Equal(1, pagedResult?.TotalRecords);
             Assert.Equal(1, pagedResult?.Items?.Count);
-            Assert.Equal("Characteristic B", pagedResult?.Items[0].CharacteristicName);
+            Assert.Equal("Characteristic B", pagedResult?.Items[0].Name);
         }
 
         [Fact]
@@ -155,13 +155,12 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
             var controller = new CharacteristicsController(_context);
             var request = new CharacteristicCreateRequest
             {
-                CharacteristicName = "Characteristic D",
+                Name = "Characteristic D",
                 MeaTypeId = 1,
                 ProcessId = 1,
-                CharacteristicType = 0,
-                CharacteristicUnit = "Unit D",
+                DataType = 0,
+                Unit = "Unit D",
                 DefectRateLimit = 5,
-                EventEnable = 1,
                 EmailEventModel = 1,
                 Decimals = 2
             };
@@ -174,7 +173,7 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
             Assert.NotNull(createdAtActionResult);
             var characteristicVm = createdAtActionResult?.Value as CharacteristicVm;
             Assert.NotNull(characteristicVm);
-            Assert.Equal("Characteristic D", characteristicVm?.CharacteristicName);
+            Assert.Equal("Characteristic D", characteristicVm?.Name);
         }
 
         [Fact]
@@ -183,13 +182,12 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
             var controller = new CharacteristicsController(_context);
             var request = new CharacteristicCreateRequest
             {
-                CharacteristicName = "",
+                Name = "",
                 MeaTypeId = 1,
                 ProcessId = 1,
-                CharacteristicType = 0,
-                CharacteristicUnit = "Unit D",
+                DataType = 0,
+                Unit = "Unit D",
                 DefectRateLimit = 5,
-                EventEnable = 1,
                 EmailEventModel = 1,
                 Decimals = 2
             };
@@ -208,13 +206,12 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
             var controller = new CharacteristicsController(_context);
             var request = new CharacteristicCreateRequest
             {
-                CharacteristicName = "Characteristic D",
+                Name = "Characteristic D",
                 MeaTypeId = 999,
                 ProcessId = 1,
-                CharacteristicType = 0,
-                CharacteristicUnit = "Unit D",
+                DataType = 0,
+                Unit = "Unit D",
                 DefectRateLimit = 5,
-                EventEnable = 1,
                 EmailEventModel = 1,
                 Decimals = 2
             };
@@ -233,13 +230,12 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
             var controller = new CharacteristicsController(_context);
             var request = new CharacteristicCreateRequest
             {
-                CharacteristicName = "Characteristic D",
+                Name = "Characteristic D",
                 MeaTypeId = 1,
                 ProcessId = 999,
-                CharacteristicType = 0,
-                CharacteristicUnit = "Unit D",
+                DataType = 0,
+                Unit = "Unit D",
                 DefectRateLimit = 5,
-                EventEnable = 1,
                 EmailEventModel = 1,
                 Decimals = 2
             };
@@ -258,13 +254,12 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
             var controller = new CharacteristicsController(_context);
             var request = new CharacteristicCreateRequest
             {
-                CharacteristicName = "Characteristic D",
+                Name = "Characteristic D",
                 MeaTypeId = 1,
                 ProcessId = 1,
-                CharacteristicType = 999,
-                CharacteristicUnit = "Unit D",
+                DataType = 999,
+                Unit = "Unit D",
                 DefectRateLimit = 5,
-                EventEnable = 1,
                 EmailEventModel = 1,
                 Decimals = 2
             };
@@ -283,13 +278,12 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
             var controller = new CharacteristicsController(_context);
             var request = new CharacteristicCreateRequest
             {
-                CharacteristicName = "Characteristic A",
+                Name = "Characteristic A",
                 MeaTypeId = 1,
                 ProcessId = 1,
-                CharacteristicType = 0,
-                CharacteristicUnit = "Unit D",
+                DataType = 0,
+                Unit = "Unit D",
                 DefectRateLimit = 5,
-                EventEnable = 1,
                 EmailEventModel = 1,
                 Decimals = 2
             };
@@ -308,13 +302,12 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
             var controller = new CharacteristicsController(_context);
             var request = new CharacteristicCreateRequest
             {
-                CharacteristicName = "Characteristic D",
+                Name = "Characteristic D",
                 MeaTypeId = 1,
                 ProcessId = 1,
-                CharacteristicType = 1,
-                CharacteristicUnit = "Unit D",
+                DataType = 1,
+                Unit = "Unit D",
                 DefectRateLimit = 5,
-                EventEnable = 1,
                 EmailEventModel = 1,
                 Decimals = -1
             };
@@ -333,13 +326,12 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
             var controller = new CharacteristicsController(_context);
             var request = new CharacteristicCreateRequest
             {
-                CharacteristicName = "Characteristic E",
+                Name = "Characteristic E",
                 MeaTypeId = 1,
                 ProcessId = 1,
-                CharacteristicType = 1,
-                CharacteristicUnit = null,
+                DataType = 1,
+                Unit = null,
                 DefectRateLimit = 5,
-                EventEnable = 1,
                 EmailEventModel = 1,
                 Decimals = 2
             };
@@ -351,8 +343,8 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
             Assert.NotNull(createdAtActionResult);
             var characteristicVm = createdAtActionResult?.Value as CharacteristicVm;
             Assert.NotNull(characteristicVm);
-            Assert.Equal("Characteristic E", characteristicVm?.CharacteristicName);
-            Assert.Null(characteristicVm?.CharacteristicUnit);
+            Assert.Equal("Characteristic E", characteristicVm?.Name);
+            Assert.Null(characteristicVm?.Unit);
         }
 
         [Fact]
@@ -361,13 +353,12 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
             var controller = new CharacteristicsController(_context);
             var request = new CharacteristicCreateRequest
             {
-                CharacteristicName = "Characteristic F",
+                Name = "Characteristic F",
                 MeaTypeId = 1,
                 ProcessId = 1,
-                CharacteristicType = 0,
-                CharacteristicUnit = "Unit F",
+                DataType = 0,
+                Unit = "Unit F",
                 DefectRateLimit = 0,
-                EventEnable = 1,
                 EmailEventModel = 1,
                 Decimals = 2
             };
@@ -379,7 +370,7 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
             Assert.NotNull(createdAtActionResult);
             var characteristicVm = createdAtActionResult?.Value as CharacteristicVm;
             Assert.NotNull(characteristicVm);
-            Assert.Equal("Characteristic F", characteristicVm?.CharacteristicName);
+            Assert.Equal("Characteristic F", characteristicVm?.Name);
             Assert.Equal(0, characteristicVm?.DefectRateLimit);
         }
 
@@ -389,13 +380,12 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
             var controller = new CharacteristicsController(_context);
             var request = new CharacteristicCreateRequest
             {
-                CharacteristicName = "Characteristic G",
+                Name = "Characteristic G",
                 MeaTypeId = 1,
                 ProcessId = 1,
-                CharacteristicType = 0,
-                CharacteristicUnit = "Unit G",
+                DataType = 0,
+                Unit = "Unit G",
                 DefectRateLimit = null,
-                EventEnable = 1,
                 EmailEventModel = 1,
                 Decimals = 2
             };
@@ -407,7 +397,7 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
             Assert.NotNull(createdAtActionResult);
             var characteristicVm = createdAtActionResult?.Value as CharacteristicVm;
             Assert.NotNull(characteristicVm);
-            Assert.Equal("Characteristic G", characteristicVm?.CharacteristicName);
+            Assert.Equal("Characteristic G", characteristicVm?.Name);
             Assert.Null(characteristicVm?.DefectRateLimit);
         }
 
@@ -417,13 +407,12 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
             var controller = new CharacteristicsController(_context);
             var request = new CharacteristicCreateRequest
             {
-                CharacteristicName = "Characteristic H",
+                Name = "Characteristic H",
                 MeaTypeId = 1,
                 ProcessId = 1,
-                CharacteristicType = 1,
-                CharacteristicUnit = "Unit H",
+                DataType = 1,
+                Unit = "Unit H",
                 DefectRateLimit = 5,
-                EventEnable = 0,
                 EmailEventModel = 1,
                 Decimals = 2
             };
@@ -435,8 +424,7 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
             Assert.NotNull(createdAtActionResult);
             var characteristicVm = createdAtActionResult?.Value as CharacteristicVm;
             Assert.NotNull(characteristicVm);
-            Assert.Equal("Characteristic H", characteristicVm?.CharacteristicName);
-            Assert.Equal(0, characteristicVm?.EventEnable);
+            Assert.Equal("Characteristic H", characteristicVm?.Name);
         }
 
         [Fact]
@@ -445,13 +433,12 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
             var controller = new CharacteristicsController(_context);
             var request = new CharacteristicCreateRequest
             {
-                CharacteristicName = "Characteristic I",
+                Name = "Characteristic I",
                 MeaTypeId = 1,
                 ProcessId = 1,
-                CharacteristicType = 0,
-                CharacteristicUnit = "Unit I",
+                DataType = 0,
+                Unit = "Unit I",
                 DefectRateLimit = 5,
-                EventEnable = 1,
                 EmailEventModel = 0,
                 Decimals = 2
             };
@@ -463,7 +450,7 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
             Assert.NotNull(createdAtActionResult);
             var characteristicVm = createdAtActionResult?.Value as CharacteristicVm;
             Assert.NotNull(characteristicVm);
-            Assert.Equal("Characteristic I", characteristicVm?.CharacteristicName);
+            Assert.Equal("Characteristic I", characteristicVm?.Name);
             Assert.Equal(0, characteristicVm?.EmailEventModel);
         }
 
@@ -473,13 +460,12 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
             var controller = new CharacteristicsController(_context);
             var request = new CharacteristicCreateRequest
             {
-                CharacteristicName = "Characteristic J",
+                Name = "Characteristic J",
                 MeaTypeId = 1,
                 ProcessId = 1,
-                CharacteristicType = 0,
-                CharacteristicUnit = "Unit J",
+                DataType = 0,
+                Unit = "Unit J",
                 DefectRateLimit = 5,
-                EventEnable = 1,
                 EmailEventModel = 1,
                 Decimals = 0
             };
@@ -491,7 +477,7 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
             Assert.NotNull(createdAtActionResult);
             var characteristicVm = createdAtActionResult?.Value as CharacteristicVm;
             Assert.NotNull(characteristicVm);
-            Assert.Equal("Characteristic J", characteristicVm?.CharacteristicName);
+            Assert.Equal("Characteristic J", characteristicVm?.Name);
             Assert.Equal(0, characteristicVm?.Decimals);
         }
 
@@ -502,13 +488,12 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
             var request = new CharacteristicVm
             {
                 Id = 1,
-                CharacteristicName = "Characteristic A Updated",
+                Name = "Characteristic A Updated",
                 MeaTypeId = 2,
                 ProcessId = 1,
-                CharacteristicType = 1,
-                CharacteristicUnit = "Unit A Updated",
+                DataType = 1,
+                Unit = "Unit A Updated",
                 DefectRateLimit = 10,
-                EventEnable = 0,
                 EmailEventModel = 0,
                 Decimals = 3
             };
@@ -520,7 +505,7 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
             Assert.NotNull(okResult);
             var characteristicVm = okResult?.Value as CharacteristicVm;
             Assert.NotNull(characteristicVm);
-            Assert.Equal("Characteristic A Updated", characteristicVm?.CharacteristicName);
+            Assert.Equal("Characteristic A Updated", characteristicVm?.Name);
         }
 
         [Fact]
@@ -530,13 +515,12 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
             var request = new CharacteristicVm
             {
                 Id = 999,
-                CharacteristicName = "Characteristic X",
+                Name = "Characteristic X",
                 MeaTypeId = 1,
                 ProcessId = 1,
-                CharacteristicType = 0,
-                CharacteristicUnit = "Unit X",
+                DataType = 0,
+                Unit = "Unit X",
                 DefectRateLimit = 5,
-                EventEnable = 1,
                 EmailEventModel = 1,
                 Decimals = 2
             };
@@ -556,13 +540,12 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
             var request = new CharacteristicVm
             {
                 Id = 1,
-                CharacteristicName = "Characteristic B",
+                Name = "Characteristic B",
                 MeaTypeId = 1,
                 ProcessId = 1,
-                CharacteristicType = 0,
-                CharacteristicUnit = "Unit A",
+                DataType = 0,
+                Unit = "Unit A",
                 DefectRateLimit = 5,
-                EventEnable = 1,
                 EmailEventModel = 1,
                 Decimals = 2
             };
@@ -587,7 +570,7 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
             Assert.NotNull(okResult);
             var characteristic = okResult?.Value as CharacteristicVm;
             Assert.NotNull(characteristic);
-            Assert.Equal("Characteristic A", characteristic?.CharacteristicName);
+            Assert.Equal("Characteristic A", characteristic?.Name);
         }
 
         [Fact]

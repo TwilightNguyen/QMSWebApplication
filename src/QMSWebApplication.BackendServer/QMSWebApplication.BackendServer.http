@@ -1,0 +1,6 @@
+@QMSWebApplication.BackendServer_HostAddress = http://localhost:5121
+
+GET {{QMSWebApplication.BackendServer_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

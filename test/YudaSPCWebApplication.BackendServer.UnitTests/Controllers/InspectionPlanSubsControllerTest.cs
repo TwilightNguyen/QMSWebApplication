@@ -3,11 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using YudaSPCWebApplication.BackendServer.Controllers;
-using YudaSPCWebApplication.BackendServer.Data;
-using YudaSPCWebApplication.ViewModels.System.InspectionPlanSub;
+using QMSWebApplication.BackendServer.Controllers;
+using QMSWebApplication.BackendServer.Data;
+using QMSWebApplication.ViewModels.System.InspectionPlanSub;
 
-namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
+namespace QMSWebApplication.BackendServer.UnitTest.Controllers
 {
     public class InspectionPlanSubsControllerTest : IAsyncLifetime
     {
@@ -195,7 +195,7 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
             var okResult = result as OkObjectResult;
             var inspectionPlanSubList = okResult?.Value as IEnumerable<InspectionPlanSubVm>;
             Assert.NotNull(inspectionPlanSubList);
-            Assert.Equal(2, inspectionPlanSubList!.Count());
+            Assert.Single(inspectionPlanSubList!);
             Assert.All(inspectionPlanSubList, item => Assert.Equal(inspPlanId, item.InspPlanId));
         }
 

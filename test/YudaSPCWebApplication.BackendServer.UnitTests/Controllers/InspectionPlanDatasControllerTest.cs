@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Numerics;
-using YudaSPCWebApplication.BackendServer.Controllers;
-using YudaSPCWebApplication.BackendServer.Data;
-using YudaSPCWebApplication.ViewModels.System.InspectionPlanData;
+using QMSWebApplication.BackendServer.Controllers;
+using QMSWebApplication.BackendServer.Data;
+using QMSWebApplication.ViewModels.System.InspectionPlanData;
 
-namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
+namespace QMSWebApplication.BackendServer.UnitTest.Controllers
 {
     public class InspectionPlanDatasControllerTest : IAsyncLifetime
     {
@@ -47,8 +47,7 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
                 InspPlanSubId = 1,
                 SPCChart = true,
                 DataEntry = true,
-                PlanState = 1,
-                SpkControl = true,
+                CpkControl = true,
                 // Prefer correct type for SampleSize; if int:
                 SampleSize = "10"
             };
@@ -81,9 +80,8 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
                 CharacteristicId = 3,
                 InspPlanSubId = 1,
                 SPCChart = true,
-                DataEntry = true,
-                PlanState = 1,
-                SpkControl = true,
+                DataEntry = true, 
+                CpkControl = true,
                 // Prefer correct type for SampleSize; if int:
                 SampleSize = "10"
             };
@@ -116,8 +114,7 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest.Controllers
                 InspPlanSubId = 999, // Non-existent InspPlanSubId
                 SPCChart = true,
                 DataEntry = true,
-                PlanState = 1,
-                SpkControl = true,
+                CpkControl = true,
                 SampleSize = "10"
             };
 

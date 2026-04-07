@@ -2,10 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using YudaSPCWebApplication.BackendServer.Data;
-using YudaSPCWebApplication.BackendServer.Data.Entities;
+using QMSWebApplication.BackendServer.Data;
+using QMSWebApplication.BackendServer.Data.Entities;
 
-namespace YudaSPCWebApplication.BackendServer.UnitTest
+namespace QMSWebApplication.BackendServer.UnitTest
 {
     public static class InMemoryDbContext
     {
@@ -26,19 +26,19 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest
 
         public static void SeedProductionAreas(ApplicationDbContext context)
         {
-            context.ProductionAreas.AddRange(new List<ProductionArea>
+            context.ProductionAreas.AddRange(new List<ProductionAreas>
             {
-                new() { IntID = 1, StrNameArea = "Tape" },
-                new() { IntID = 2, StrNameArea = "Layout" },
-                new() { IntID = 3, StrNameArea = "Block Vial" },
-                new() { IntID = 4, StrNameArea = "Print" }
+                new() { Id = 1, Name = "Tape" },
+                new() { Id = 2, Name = "Layout" },
+                new() { Id = 3, Name = "Block Vial" },
+                new() { Id = 4, Name = "Print" }
             });
             context.SaveChanges();
         }
 
         public static void SeedRoles(ApplicationDbContext context)
         {
-            context.Roles.AddRange(new List<Role>
+            context.Roles.AddRange(new List<Roles>
             {
                 new() { Id = Guid.NewGuid().ToString(), Name = "Admin", IntRoleID = 1, StrRoleName = "Admin", StrDescription = "Administrator Role", IntLevel = 1, IntRoleUser = 5 },
                 new() { Id = Guid.NewGuid().ToString(), Name = "User",  IntRoleID = 2, StrRoleName = "User", StrDescription = "User Role", IntLevel = 2, IntRoleUser = 10 },
@@ -162,91 +162,91 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest
 
         public static void SeedProcesses(ApplicationDbContext context)
         {
-            context.Processes.AddRange(new List<Process>
+            context.Processes.AddRange(new List<Processes>
             {
-                new() { IntID = 1, StrProcessName = "Process A", IntAreaID = 1 },
-                new() { IntID = 2, StrProcessName = "Process B", IntAreaID = 1 },
-                new() { IntID = 3, StrProcessName = "Process C", IntAreaID = 2 },
-                new() { IntID = 4, StrProcessName = "Process D", IntAreaID = 3 },
+                new() { Id = 1, Name = "Process A", AreaId = 1 },
+                new() { Id = 2, Name = "Process B", AreaId = 1 },
+                new() { Id = 3, Name = "Process C", AreaId = 2 },
+                new() { Id = 4, Name = "Process D", AreaId = 3 },
             });
             context.SaveChanges();
         }
 
         public static void SeedProcessLines(ApplicationDbContext context)
         {
-            context.ProcessLines.AddRange(new List<ProcessLine>
+            context.ProcessLines.AddRange(new List<ProcessLines>
             {
-                new() { IntID = 1, StrProcessLineName = "Process A Line A", StrProcessLineCode = "A0A", IntProcessID = 1 },
-                new() { IntID = 2, StrProcessLineName = "Process A Line B", StrProcessLineCode = "A0B", IntProcessID = 1 },
-                new() { IntID = 3, StrProcessLineName = "Process B Line C", StrProcessLineCode = "B0C", IntProcessID = 2 },
-                new() { IntID = 4, StrProcessLineName = "Process C Line D", StrProcessLineCode = "C0D", IntProcessID = 3 }
+                new() { Id = 1, Name = "Process A Line A", LineCode = "A0A", ProcessId = 1 },
+                new() { Id = 2, Name = "Process A Line B", LineCode = "A0B", ProcessId = 1 },
+                new() { Id = 3, Name = "Process B Line C", LineCode = "B0C", ProcessId = 2 },
+                new() { Id = 4, Name = "Process C Line D", LineCode = "C0D", ProcessId = 3 }
             });
             context.SaveChanges();
         }
 
         public static void SeedEventLogs(ApplicationDbContext context)
         {
-            context.EventLogs.AddRange(new List<EventLog>
+            context.EventLogs.AddRange(new List<EventLogs>
             {
-                new() { IntEventID = 1, DtEventTime = DateTime.UtcNow.AddHours(-2), StrEventCode = "E001", StrEvent = "User Admin logged in", StrStation = "192.168.1.12" },
-                new() { IntEventID = 2, DtEventTime = DateTime.UtcNow.AddHours(-1), StrEventCode = "E002", StrEvent = "User Admin logged out", StrStation = "192.168.1.13" },
-                new() { IntEventID = 3, DtEventTime = DateTime.UtcNow, StrEventCode = "E003", StrEvent = "Error occurred", StrStation = "192.168.1.12" }
+                new() { Id = 1, EventTime = DateTimeOffset.Now.AddHours(-2), EventCode = "E001", Description = "User Admin logged in", Station = "192.168.1.12" },
+                new() { Id = 2, EventTime = DateTimeOffset.Now.AddHours(-1), EventCode = "E002", Description = "User Admin logged out", Station = "192.168.1.13" },
+                new() { Id = 3, EventTime = DateTimeOffset.Now, EventCode = "E003", Description = "Error occurred", Station = "192.168.1.12" }
             });
             context.SaveChanges();
         }
 
         public static void SeedMeasureTypes(ApplicationDbContext context)
         {
-            context.MeasureTypes.AddRange(new List<MeasureType>
+            context.MeasureTypes.AddRange(new List<SampleTypes>
             {
-                new() { IntID = 1, StrMeaType = "Length" },
-                new() { IntID = 2, StrMeaType = "Weight" },
-                new() { IntID = 3, StrMeaType = "Temperature" }
+                new() { Id = 1, Name = "Length" },
+                new() { Id = 2, Name = "Weight" },
+                new() { Id = 3, Name = "Temperature" }
             });
             context.SaveChanges();
         }
 
         public static void SeedCharacteristics(ApplicationDbContext context)
         {
-            context.Characteristics.AddRange(new List<Characteristic>
+            context.Characteristics.AddRange(new List<Characteristics>
             {
-                new() { IntID = 1, StrCharacteristicName = "Characteristic A", IntProcessID = 1, IntMeaTypeID = 1, IntCharacteristicType = 0, IntDecimals = 2, StrCharacteristicUnit = "G", IntDefectRateLimit = 10, IntEmailEventModel = 2, IntEventEnable = 1,BoolDeleted = false},
-                new() { IntID = 2, StrCharacteristicName = "Characteristic B", IntProcessID = 1, IntMeaTypeID = 1, IntCharacteristicType = 0, IntDecimals = 2, StrCharacteristicUnit = "KG", IntDefectRateLimit = null, IntEmailEventModel = 0, IntEventEnable = 0,BoolDeleted = false},
-                new() { IntID = 3, StrCharacteristicName = "Characteristic C", IntProcessID = 2, IntMeaTypeID = 1, IntCharacteristicType = 0, IntDecimals = 2, StrCharacteristicUnit = "ML", IntDefectRateLimit = null, IntEmailEventModel = 1, IntEventEnable = 1,BoolDeleted = false},
+                new() { Id = 1, Name = "Characteristic A", ProcessId = 1, MeaTypeId = 1, DataType = 0, Decimals = 2, Unit = "G", DefectRateLimit = 10, EmailEventModel = 2, Enabled = true},
+                new() { Id = 2, Name = "Characteristic B", ProcessId = 1, MeaTypeId = 1, DataType = 0, Decimals = 2, Unit = "KG", DefectRateLimit = null, EmailEventModel = 0, Enabled = true},
+                new() { Id = 3, Name = "Characteristic C", ProcessId = 2, MeaTypeId = 1, DataType = 0, Decimals = 2, Unit = "ML", DefectRateLimit = null, EmailEventModel = 1, Enabled = true},
             });
             context.SaveChanges();
         }
 
         public static void SeedInspectionPlans(ApplicationDbContext context)
         {
-            context.InspectionPlans.AddRange(new List<InspectionPlan>
+            context.InspectionPlans.AddRange(new List<InspectionPlans>
             {
-                new() { IntID = 1, StrInspPlanName = "Inspection Plan A", IntAreaID = 1, BoolDeleted = false },
-                new() { IntID = 2, StrInspPlanName = "Inspection Plan B", IntAreaID = 1, BoolDeleted = false },
-                new() { IntID = 3, StrInspPlanName = "Inspection Plan C", IntAreaID = 2,  BoolDeleted = false }
+                new() { Id = 1, Name = "Inspection Plan A", AreaId = 1, Enabled = true },
+                new() { Id = 2, Name = "Inspection Plan B", AreaId = 1, Enabled = true },
+                new() { Id = 3, Name = "Inspection Plan C", AreaId = 2, Enabled = true }
             });
             context.SaveChanges();
         }
 
         public static void SeedInspPlanTypes(ApplicationDbContext context)
         {
-            context.InspPlanTypes.AddRange(new List<InspectionPlanType>
+            context.InspPlanTypes.AddRange(new List<InspectionPlanTypes>
             {
-                new() { IntID = -1, StrPlanTypeName = "[ None ]" },
-                new() { IntID = 1, StrPlanTypeName = "FPI" },
-                new() { IntID = 2, StrPlanTypeName = "IPQC" },
-                new() { IntID = 3, StrPlanTypeName = "OQC" }
+                new() { Id = -1, Name = "[ None ]" },
+                new() { Id = 1, Name = "FPI" },
+                new() { Id = 2, Name = "IPQC" },
+                new() { Id = 3, Name = "OQC" }
             });
             context.SaveChanges();
         }
 
         public static void SeedInspectionPlanSubs(ApplicationDbContext context)
         {
-            context.InspectionPlanSubs.AddRange(new List<InspectionPlanSub>
+            context.InspectionPlanSubs.AddRange(new List<InspectionPlanSubs>
             {
-                new() { IntID = 1, IntInspPlanID = 1, IntPlanTypeID = 1, DtCreateTime = DateTime.UtcNow, BoolDeleted = false },
-                new() { IntID = 2, IntInspPlanID = 1, IntPlanTypeID = 2, DtCreateTime = DateTime.UtcNow, BoolDeleted = false },
-                new() { IntID = 3, IntInspPlanID = 2, IntPlanTypeID = 1, DtCreateTime = DateTime.UtcNow, BoolDeleted = false }
+                new() { Id = 1, InspPlanId = 1, PlanTypeId = 1, PlanState = 1, UploadedDateTime = DateTimeOffset.Now, Enabled = true },
+                new() { Id = 2, InspPlanId = 1, PlanTypeId = 2, PlanState = 1, UploadedDateTime = DateTimeOffset.Now, Enabled = true },
+                new() { Id = 3, InspPlanId = 2, PlanTypeId = 1, PlanState = 1, UploadedDateTime = DateTimeOffset.Now, Enabled = true }
             });
             context.SaveChanges();
         }
@@ -255,96 +255,96 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest
         {
             context.InspectionPlanDatas.AddRange(new List<InspectionPlanData>
             {
-                new() { IntID = 1, IntInspPlanSubID = 1, IntCharacteristicID = 1, FtLSL = 10, FtUSL = 20, FtLCL = 12, FtUCL = 18, BoolSPCChart = true, BoolDataEntry = true, IntPlanState = 1, FtCpkMax = 1.33, FtCpkMin = 1.00, BoolSpkControl = true, StrSampleSize = "5", FtPercentControlLimit = 95, BoolDeleted = false },
-                new() { IntID = 2, IntInspPlanSubID = 1, IntCharacteristicID = 2, FtLSL = 5, FtUSL = 15, FtLCL = 7, FtUCL = 13, BoolSPCChart = false, BoolDataEntry = true, IntPlanState = 1, FtCpkMax = 1.50, FtCpkMin = 1.20, BoolSpkControl = false, StrSampleSize = "3", FtPercentControlLimit = 90, BoolDeleted = false },
-                new() { IntID = 3, IntInspPlanSubID = 2, IntCharacteristicID = 3, FtLSL = 100, FtUSL = 200, FtLCL = 120, FtUCL = 180, BoolSPCChart = true, BoolDataEntry = false, IntPlanState = 2, FtCpkMax = 1.25, FtCpkMin = 1.10, BoolSpkControl = true, StrSampleSize = "4", FtPercentControlLimit = 92, BoolDeleted = false }
+                new() { Id = 1, InspPlanSubId = 1, CharacteristicId = 1, LSL = 10, USL = 20, LCL = 12, UCL = 18, EnabledSPCChart = true, DataEntry = true, CpkMax = 1.33, CpkMin = 1.00, EnabledCpkControl = true, Notes = "5", PercentControlLimit = 95, Enabled = true },
+                new() { Id = 2, InspPlanSubId = 1, CharacteristicId = 2, LSL = 5, USL = 15, LCL = 7, UCL = 13, EnabledSPCChart = false, DataEntry = true, CpkMax = 1.50, CpkMin = 1.20, EnabledCpkControl = false, Notes = "3", PercentControlLimit = 90, Enabled = true },
+                new() { Id = 3, InspPlanSubId = 2, CharacteristicId = 3, LSL = 100,USL = 200, LCL = 120, UCL = 180, EnabledSPCChart = true, DataEntry = false, CpkMax = 1.25, CpkMin = 1.10, EnabledCpkControl = true, Notes = "4", PercentControlLimit = 92, Enabled = true }
             });
             context.SaveChanges();
         }
 
         public static void SeedProducts(ApplicationDbContext context)
         {
-            context.Products.AddRange(new List<ProductName>
+            context.Products.AddRange(new List<Products>
             {
-                new () { IntID = 1, StrNameProduct = "Product 01", IntAreaID = 1, IntInspPlanID = 1, IntMoldQty = 2, IntCavityQty = 4, StrModelInternal = "Model Test 01", StrDescription = "Description 01", StrCustomerName = "Customer 01", StrNotes = "Notes 01", BoolDeleted = false },
-                new () { IntID = 2, StrNameProduct = "Product 02", IntAreaID = 1, IntInspPlanID = 1, IntMoldQty = 3, IntCavityQty = 5, StrModelInternal = "Model Test 02", StrDescription = "Description 02", StrCustomerName = "Customer 02", StrNotes = "Notes 02", BoolDeleted = false },
-                new () { IntID = 3, StrNameProduct = "Product 03", IntAreaID = 2, IntInspPlanID = 3, IntMoldQty = 4, IntCavityQty = 6, StrModelInternal = "Model Test 03", StrDescription = "Description 03", StrCustomerName = "Customer 03", StrNotes = "Notes 03", BoolDeleted = false },
-                new () { IntID = 4, StrNameProduct = "Product 04", IntAreaID = 2, IntInspPlanID = 3, IntMoldQty = 4, IntCavityQty = 6, StrModelInternal = "Model Test 04", StrDescription = "Description 04", StrCustomerName = "Customer 04", StrNotes = "Notes 04", BoolDeleted = false },
+                new () { Id = 1, Name = "Product 01", AreaId = 1, InspPlanId = 1, MoldQuantity = 2, CavityQuantity = 4, ModelInternal = "Model Test 01", Description = "Description 01", CustomerName = "Customer 01", Notes = "Notes 01", Enabled = true },
+                new () { Id = 2, Name = "Product 02", AreaId = 1, InspPlanId = 1, MoldQuantity = 3, CavityQuantity = 5, ModelInternal = "Model Test 02", Description = "Description 02", CustomerName = "Customer 02", Notes = "Notes 02", Enabled = true },
+                new () { Id = 3, Name = "Product 03", AreaId = 2, InspPlanId = 3, MoldQuantity = 4, CavityQuantity = 6, ModelInternal = "Model Test 03", Description = "Description 03", CustomerName = "Customer 03", Notes = "Notes 03", Enabled = true },
+                new () { Id = 4, Name = "Product 04", AreaId = 2, InspPlanId = 3, MoldQuantity = 4, CavityQuantity = 6, ModelInternal = "Model Test 04", Description = "Description 04", CustomerName = "Customer 04", Notes = "Notes 04", Enabled = true },
             });
             context.SaveChanges();
         }
 
         public static void SeedJobDecisions(ApplicationDbContext context)
         {
-            context.JobDecisions.AddRange(new List<JobDecision>
+            context.JobDecisions.AddRange(new List<JobDecisions>
             {
-                new() { IntID = 1, StrDecision = "Not yet decision", IntColorCode = 16777215 },
-                new() { IntID = 2, StrDecision = "Pass", IntColorCode = 33280 },
-                new() { IntID = 3, StrDecision = "Sorting", IntColorCode = 16776960 },
-                new() { IntID = 4, StrDecision = "Rework", IntColorCode = 16776960 },
-                new() { IntID = 5, StrDecision = "AOD", IntColorCode = 16776960 },
-                new() { IntID = 6, StrDecision = "Reject", IntColorCode = 16776960 },
+                new() { Id = 1, Decision = "Not yet decision", ColorCode = "16777215" },
+                new() { Id = 2, Decision = "Pass", ColorCode = "33280" },
+                new() { Id = 3, Decision = "Sorting", ColorCode = "16776960" },
+                new() { Id = 4, Decision = "Rework", ColorCode = "16776960" },
+                new() { Id = 5, Decision = "AOD", ColorCode = "16776960" },
+                new() { Id = 6, Decision = "Reject", ColorCode = "16776960" },
             });
             context.SaveChanges();
         }
 
         public static void SeedJobs(ApplicationDbContext context) { 
-            context.JobDatas.AddRange(new List<JobData> {
+            context.JobDatas.AddRange(new List<Jobs> {
                 new() { 
-                    IntID = 1, 
-                    StrJobCode = "Job Code 1", 
-                    StrPOCode = "PO Code 1", 
-                    StrSOCode = "SO Code 1", 
-                    IntAreaID = 1, 
-                    IntProductID = 1, 
-                    IntJobDecisionID = 1, 
-                    IntJobQty = 1000, 
-                    IntOutputQty = 1000, 
-                    DtCreateTime = DateTime.Now, 
-                    BoolDeleted = false, 
-                    IntUserID = 1 
+                    Id = 1, 
+                    JobCode = "Job Code 1", 
+                    POCode = "PO Code 1", 
+                    SOCode = "SO Code 1", 
+                    AreaId = 1, 
+                    ProductId = 1, 
+                    JobDecisionId = 1, 
+                    PlannedQuantity = 1000, 
+                    OutputQuantity = 1000, 
+                    UploadedDateTime = DateTimeOffset.Now, 
+                    Enabled = true,
+                    UserId = 1 
                 },
                 new() {
-                    IntID = 2,
-                    StrJobCode = "Job Code 2",
-                    StrPOCode = "PO Code 2",
-                    StrSOCode = "SO Code 2",
-                    IntAreaID = 1,
-                    IntProductID = 2,
-                    IntJobDecisionID = 1,
-                    IntJobQty = 1000,
-                    IntOutputQty = 1000,
-                    DtCreateTime = DateTime.Now,
-                    BoolDeleted = false,
-                    IntUserID = 1
+                    Id = 2,
+                    JobCode = "Job Code 2",
+                    POCode = "PO Code 2",
+                    SOCode = "SO Code 2",
+                    AreaId = 1,
+                    ProductId = 2,
+                    JobDecisionId = 1,
+                    PlannedQuantity = 1000,
+                    OutputQuantity = 1000,
+                    UploadedDateTime = DateTimeOffset.Now,
+                    Enabled = true,
+                    UserId = 1
                 },
                 new() {
-                    IntID = 3,
-                    StrJobCode = "Job Code 3",
-                    StrPOCode = "PO Code 3",
-                    StrSOCode = "SO Code 3",
-                    IntAreaID = 2,
-                    IntProductID = 3,
-                    IntJobDecisionID = 1,
-                    IntJobQty = 1000,
-                    IntOutputQty = 1000,
-                    DtCreateTime = DateTime.Now,
-                    BoolDeleted = false,
-                    IntUserID = 1
+                    Id = 3,
+                    JobCode = "Job Code 3",
+                    POCode = "PO Code 3",
+                    SOCode = "SO Code 3",
+                    AreaId = 2,
+                    ProductId = 3,
+                    JobDecisionId = 1,
+                    PlannedQuantity = 1000,
+                    OutputQuantity = 1000,
+                    UploadedDateTime = DateTimeOffset.Now,
+                    Enabled = true,
+                    UserId = 1
                 },
                 new() {
-                    IntID = 4,
-                    StrJobCode = "Job Code 4",
-                    StrPOCode = "PO Code 4",
-                    StrSOCode = "SO Code 4",
-                    IntAreaID = 1,
-                    IntProductID = 1,
-                    IntJobDecisionID = 1,
-                    IntJobQty = 1000,
-                    IntOutputQty = 1000,
-                    DtCreateTime = DateTime.Now,
-                    BoolDeleted = false,
-                    IntUserID = 1
+                    Id = 4,
+                    JobCode = "Job Code 4",
+                    POCode = "PO Code 4",
+                    SOCode = "SO Code 4",
+                    AreaId = 1,
+                    ProductId = 1,
+                    JobDecisionId = 1,
+                    PlannedQuantity = 1000,
+                    OutputQuantity = 1000,
+                    UploadedDateTime = DateTimeOffset.Now,
+                    Enabled = true,
+                    UserId = 1
                 },
             });
             context.SaveChanges();
@@ -352,76 +352,76 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest
 
         public static void SeedShifts(ApplicationDbContext context)
         {
-            context.Shifts.AddRange(new List<Shift>{
-                new() { IntID = 1, StrNameShift = "Shift 1", DtStartTime = new TimeSpan(6,0,0), DtEndTime = new TimeSpan(18,0,0) },
-                new() { IntID = 2, StrNameShift = "Shift 2", DtStartTime = new TimeSpan(18,0,0), DtEndTime = new TimeSpan(6,0,0) }
+            context.Shifts.AddRange(new List<Shifts>{
+                new() { Id = 1, Name = "Shift 1", StartTime = new TimeSpan(6,0,0), EndTime = new TimeSpan(18,0,0) },
+                new() { Id = 2, Name = "Shift 2", StartTime = new TimeSpan(18,0,0), EndTime = new TimeSpan(6,0,0) }
             });
 
             context.SaveChanges();
         }
 
-        public static void SeedProductions(ApplicationDbContext context) {
-            context.ProductionDatas.AddRange(new List<ProductionData>
+        public static void SeedProductionPlans(ApplicationDbContext context) {
+            context.ProductionPlans.AddRange(new List<ProductionPlans>
             {
                 new(){ 
-                    IntID = 1, 
-                    IntJobID = 1, 
-                    IntLineID = 1, 
-                    IntProductionQty = 1000, 
-                    DtProductionDate = DateTime.Now.AddDays(-9), 
-                    StrLotInform = "Lot Inform 1",
-                    StrMaterialInform = "Material Inform 1",
-                    StrNotes = "Note 1",
-                    DtStartTime = DateTime.Now.AddDays(-10),
-                    DtEndTime = DateTime.Now.AddDays(-8),
-                    IntUserID = 1,
-                    BoolDeleted = false,
-                    IntCNCLatheMachine = null,
+                    Id = 1, 
+                    JobId = 1, 
+                    LineId = 1, 
+                    PlannedQuantity = 1000, 
+                    ProductionDate = DateTime.Now.AddDays(-9), 
+                    LotInform = "Lot Inform 1",
+                    MaterialInform = "Material Inform 1",
+                    Notes = "Note 1",
+                    StartTime = DateTime.Now.AddDays(-10),
+                    EndTime = DateTime.Now.AddDays(-8),
+                    UserId = 1,
+                    Enabled = true,
+                    CNCLatheMachine = null,
                 },
                 new(){
-                    IntID = 2,
-                    IntJobID = 1,
-                    IntLineID = 1,
-                    IntProductionQty = 2000,
-                    DtProductionDate = DateTime.Now.AddDays(-1),
-                    StrLotInform = "Lot Inform 2",
-                    StrMaterialInform = "Material Inform 2",
-                    StrNotes = "Note 2",
-                    DtStartTime = DateTime.Now.AddDays(-2),
-                    DtEndTime = null,
-                    IntUserID = 1,
-                    BoolDeleted = false,
-                    IntCNCLatheMachine = null,
+                    Id = 2,
+                    JobId = 1,
+                    LineId = 1,
+                    PlannedQuantity = 2000,
+                    ProductionDate = DateTime.Now.AddDays(-1),
+                    LotInform = "Lot Inform 2",
+                    MaterialInform = "Material Inform 2",
+                    Notes = "Note 2",
+                    StartTime = DateTime.Now.AddDays(-2),
+                    EndTime = null,
+                    UserId = 1,
+                    Enabled = true,
+                    CNCLatheMachine = null,
                 },
                 new(){
-                    IntID = 3,
-                    IntJobID = 2,
-                    IntLineID = 2,
-                    IntProductionQty = 3000,
-                    DtProductionDate = DateTime.Now.AddDays(-1),
-                    StrLotInform = "Lot Inform 3",
-                    StrMaterialInform = "Material Inform 3",
-                    StrNotes = "Note 3",
-                    DtStartTime = DateTime.Now.AddDays(-2),
-                    DtEndTime = null,
-                    IntUserID = 1,
-                    BoolDeleted = false,
-                    IntCNCLatheMachine = null,
+                    Id = 3,
+                    JobId = 2,
+                    LineId = 2,
+                    PlannedQuantity = 3000,
+                    ProductionDate = DateTime.Now.AddDays(-1),
+                    LotInform = "Lot Inform 3",
+                    MaterialInform = "Material Inform 3",
+                    Notes = "Note 3",
+                    StartTime = DateTime.Now.AddDays(-2),
+                    EndTime = null,
+                    UserId = 1,
+                    Enabled = true,
+                    CNCLatheMachine = null,
                 },
                 new(){
-                    IntID = 4,
-                    IntJobID = 3,
-                    IntLineID = 3,
-                    IntProductionQty = 3000,
-                    DtProductionDate = DateTime.Now.AddDays(-1),
-                    StrLotInform = "Lot Inform 4",
-                    StrMaterialInform = "Material Inform 4",
-                    StrNotes = "Note 4",
-                    DtStartTime = DateTime.Now.AddDays(-2),
-                    DtEndTime = null,
-                    IntUserID = 1,
-                    BoolDeleted = false,
-                    IntCNCLatheMachine = null,
+                    Id = 4,
+                    JobId = 3,
+                    LineId = 3,
+                    PlannedQuantity = 3000,
+                    ProductionDate = DateTime.Now.AddDays(-1),
+                    LotInform = "Lot Inform 4",
+                    MaterialInform = "Material Inform 4",
+                    Notes = "Note 4",
+                    StartTime = DateTime.Now.AddDays(-2),
+                    EndTime = null,
+                    UserId = 1,
+                    Enabled = true,
+                    CNCLatheMachine = null,
                 },
             });
 
@@ -430,27 +430,17 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest
 
         public static void SeedTvDisplay(ApplicationDbContext context)
         {
-            context.TVDisplays.AddRange(new List<TVDisplay> {
+            context.TVDisplays.AddRange(new List<TVDisplays> {
                 new()
                 {
-                    IntID = 1,
-                    StrTVName = "Tapes",
-                    StrProductionID = "1",
-                    StrCharacteristicID = "1",
-                    StrPlanTypeID = "1",
-                    StrMoldID = "1",
-                    StrCavityID = "1",
+                    Id = 1,
+                    Name = "Tapes",
 
                 },
                 new()
                 {
-                    IntID = 2,
-                    StrTVName = "Layout",
-                    StrProductionID = null,
-                    StrCharacteristicID = null,
-                    StrPlanTypeID = null,
-                    StrMoldID = null,
-                    StrCavityID = null,
+                    Id = 2,
+                    Name = "Layout",
 
                 }
             });
@@ -460,217 +450,217 @@ namespace YudaSPCWebApplication.BackendServer.UnitTest
 
         public static void SeedMeasData(ApplicationDbContext context)
         {
-            context.MeasDatas.AddRange(new List<MeasData3_01>
+            context.MeasDatas.AddRange(new List<Samples>
             {
                 new() {
-                    IntID = 1,
-                    IntProductionID = 1,
-                    IntJobID = 1,
-                    IntCharacteristicID = 1,
-                    IntLineID = 1,
-                    VarCharacteristicValue = "15",
-                    DtTimeMeasure = DateTime.Now.AddDays(-9).AddMinutes(1),
-                    DtTimeStamp = DateTime.Now.AddDays(-9).AddMinutes(1),
-                    IntMoldID = 1,
-                    IntCavityID = 1,
-                    IntDataCollection = 1,
-                    IntEmailSent = 0,
-                    IntOKNG = 0,
-                    IntOutputQty = 1,
-                    IntPlanTypeID = 1,
-                    IntSampleIndex = 5,
-                    IntSampleQty = 5,
-                    IntUserID = 1,
-                    StrOutputNotes = "Note 1"
+                    Id = 1,
+                    ProductionId = 1,
+                    JobId = 1,
+                    CharacteristicId = 1,
+                    LineId = 1,
+                    CharacteristicValue = "15",
+                    UploadedDateTime = DateTime.Now.AddDays(-9).AddMinutes(1),
+                    MeasuredDateTime = DateTime.Now.AddDays(-9).AddMinutes(1),
+                    MoldId = 1,
+                    CavityId = 1,
+                    DataCollection = 1,
+                    EmailSent = 0,
+                    Status = 0,
+                    OutputQuantity = 1,
+                    PlanTypeId = 1,
+                    SampleIndex = 5,
+                    SampleQuantity = 5,
+                    UserId = 1,
+                    Notes = "Note 1"
                 },
                 new() {
-                    IntID = 2,
-                    IntProductionID = 1,
-                    IntJobID = 1,
-                    IntCharacteristicID = 2,
-                    IntLineID = 1,
-                    VarCharacteristicValue = "10",
-                    DtTimeMeasure = DateTime.Now.AddDays(-9).AddMinutes(2),
-                    DtTimeStamp = DateTime.Now.AddDays(-9).AddMinutes(2),
-                    IntMoldID = 1,
-                    IntCavityID = 1,
-                    IntDataCollection = 1,
-                    IntEmailSent = 0,
-                    IntOKNG = 0,
-                    IntOutputQty = 1,
-                    IntPlanTypeID = 1,
-                    IntSampleIndex = 5,
-                    IntSampleQty = 5,
-                    IntUserID = 1,
-                    StrOutputNotes = "Note 1"
+                    Id = 2,
+                    ProductionId = 1,
+                    JobId = 1,
+                    CharacteristicId = 2,
+                    LineId = 1,
+                    CharacteristicValue = "10",
+                    UploadedDateTime = DateTime.Now.AddDays(-9).AddMinutes(2),
+                    MeasuredDateTime = DateTime.Now.AddDays(-9).AddMinutes(2),
+                    MoldId = 1,
+                    CavityId = 1,
+                    DataCollection = 1,
+                    EmailSent = 0,
+                    Status = 0,
+                    OutputQuantity = 1,
+                    PlanTypeId = 1,
+                    SampleIndex = 5,
+                    SampleQuantity = 5,
+                    UserId = 1,
+                    Notes = "Note 1"
                 },
                 new() {
-                    IntID = 3,
-                    IntProductionID = 1,
-                    IntJobID = 1,
-                    IntCharacteristicID = 1,
-                    IntLineID = 1,
-                    VarCharacteristicValue = "14",
-                    DtTimeMeasure = DateTime.Now.AddDays(-9).AddMinutes(3),
-                    DtTimeStamp = DateTime.Now.AddDays(-9).AddMinutes(3),
-                    IntMoldID = 1,
-                    IntCavityID = 1,
-                    IntDataCollection = 1,
-                    IntEmailSent = 0,
-                    IntOKNG = 0,
-                    IntOutputQty = 1,
-                    IntPlanTypeID = 1,
-                    IntSampleIndex = 5,
-                    IntSampleQty = 5,
-                    IntUserID = 1,
-                    StrOutputNotes = "Note 1"
+                    Id = 3,
+                    ProductionId = 1,
+                    JobId = 1,
+                    CharacteristicId = 1,
+                    LineId = 1,
+                    CharacteristicValue = "14",
+                    UploadedDateTime = DateTime.Now.AddDays(-9).AddMinutes(3),
+                    MeasuredDateTime = DateTime.Now.AddDays(-9).AddMinutes(3),
+                    MoldId = 1,
+                    CavityId = 1,
+                    DataCollection = 1,
+                    EmailSent = 0,
+                    Status = 0,
+                    OutputQuantity = 1,
+                    PlanTypeId = 1,
+                    SampleIndex = 5,
+                    SampleQuantity = 5,
+                    UserId = 1,
+                    Notes = "Note 1"
                 },
                 new() {
-                    IntID = 4,
-                    IntProductionID = 1,
-                    IntJobID = 1,
-                    IntCharacteristicID = 2,
-                    IntLineID = 1,
-                    VarCharacteristicValue = "12",
-                    DtTimeMeasure = DateTime.Now.AddDays(-9).AddMinutes(4),
-                    DtTimeStamp = DateTime.Now.AddDays(-9).AddMinutes(4),
-                    IntMoldID = 1,
-                    IntCavityID = 1,
-                    IntDataCollection = 1,
-                    IntEmailSent = 0,
-                    IntOKNG = 0,
-                    IntOutputQty = 1,
-                    IntPlanTypeID = 1,
-                    IntSampleIndex = 5,
-                    IntSampleQty = 5,
-                    IntUserID = 1,
-                    StrOutputNotes = "Note 1"
+                    Id = 4,
+                    ProductionId = 1,
+                    JobId = 1,
+                    CharacteristicId = 2,
+                    LineId = 1,
+                    CharacteristicValue = "12",
+                    UploadedDateTime = DateTime.Now.AddDays(-9).AddMinutes(4),
+                    MeasuredDateTime = DateTime.Now.AddDays(-9).AddMinutes(4),
+                    MoldId = 1,
+                    CavityId = 1,
+                    DataCollection = 1,
+                    EmailSent = 0,
+                    Status = 0,
+                    OutputQuantity = 1,
+                    PlanTypeId = 1,
+                    SampleIndex = 5,
+                    SampleQuantity = 5,
+                    UserId = 1,
+                    Notes = "Note 1"
                 },
                 new() {
-                    IntID = 5,
-                    IntProductionID = 1,
-                    IntJobID = 1,
-                    IntCharacteristicID = 1,
-                    IntLineID = 1,
-                    VarCharacteristicValue = "16",
-                    DtTimeMeasure = DateTime.Now.AddDays(-9).AddMinutes(5),
-                    DtTimeStamp = DateTime.Now.AddDays(-9).AddMinutes(5),
-                    IntMoldID = 1,
-                    IntCavityID = 1,
-                    IntDataCollection = 1,
-                    IntEmailSent = 0,
-                    IntOKNG = 0,
-                    IntOutputQty = 1,
-                    IntPlanTypeID = 1,
-                    IntSampleIndex = 5,
-                    IntSampleQty = 5,
-                    IntUserID = 1,
-                    StrOutputNotes = "Note 1"
+                    Id = 5,
+                    ProductionId = 1,
+                    JobId = 1,
+                    CharacteristicId = 1,
+                    LineId = 1,
+                    CharacteristicValue = "16",
+                    UploadedDateTime = DateTime.Now.AddDays(-9).AddMinutes(5),
+                    MeasuredDateTime = DateTime.Now.AddDays(-9).AddMinutes(5),
+                    MoldId = 1,
+                    CavityId = 1,
+                    DataCollection = 1,
+                    EmailSent = 0,
+                    Status = 0,
+                    OutputQuantity = 1,
+                    PlanTypeId = 1,
+                    SampleIndex = 5,
+                    SampleQuantity = 5,
+                    UserId = 1,
+                    Notes = "Note 1"
                 },
                 new() {
-                    IntID = 6,
-                    IntProductionID = 1,
-                    IntJobID = 1,
-                    IntCharacteristicID = 2,
-                    IntLineID = 1,
-                    VarCharacteristicValue = "11",
-                    DtTimeMeasure = DateTime.Now.AddDays(-9).AddMinutes(6),
-                    DtTimeStamp = DateTime.Now.AddDays(-9).AddMinutes(6),
-                    IntMoldID = 1,
-                    IntCavityID = 1,
-                    IntDataCollection = 1,
-                    IntEmailSent = 0,
-                    IntOKNG = 0,
-                    IntOutputQty = 1,
-                    IntPlanTypeID = 1,
-                    IntSampleIndex = 5,
-                    IntSampleQty = 5,
-                    IntUserID = 1,
-                    StrOutputNotes = "Note 1"
+                    Id = 6,
+                    ProductionId = 1,
+                    JobId = 1,
+                    CharacteristicId = 2,
+                    LineId = 1,
+                    CharacteristicValue = "11",
+                    UploadedDateTime = DateTime.Now.AddDays(-9).AddMinutes(6),
+                    MeasuredDateTime = DateTime.Now.AddDays(-9).AddMinutes(6),
+                    MoldId = 1,
+                    CavityId = 1,
+                    DataCollection = 1,
+                    EmailSent = 0,
+                    Status = 0,
+                    OutputQuantity = 1,
+                    PlanTypeId = 1,
+                    SampleIndex = 5,
+                    SampleQuantity = 5,
+                    UserId = 1,
+                    Notes = "Note 1"
                 },
                 new() {
-                    IntID = 7,
-                    IntProductionID = 1,
-                    IntJobID = 1,
-                    IntCharacteristicID = 1,
-                    IntLineID = 1,
-                    VarCharacteristicValue = "13",
-                    DtTimeMeasure = DateTime.Now.AddDays(-9).AddMinutes(7),
-                    DtTimeStamp = DateTime.Now.AddDays(-9).AddMinutes(7),
-                    IntMoldID = 1,
-                    IntCavityID = 1,
-                    IntDataCollection = 1,
-                    IntEmailSent = 0,
-                    IntOKNG = 0,
-                    IntOutputQty = 1,
-                    IntPlanTypeID = 1,
-                    IntSampleIndex = 5,
-                    IntSampleQty = 5,
-                    IntUserID = 1,
-                    StrOutputNotes = "Note 1"
+                    Id = 7,
+                    ProductionId = 1,
+                    JobId = 1,
+                    CharacteristicId = 1,
+                    LineId = 1,
+                    CharacteristicValue = "13",
+                    UploadedDateTime = DateTime.Now.AddDays(-9).AddMinutes(7),
+                    MeasuredDateTime = DateTime.Now.AddDays(-9).AddMinutes(7),
+                    MoldId = 1,
+                    CavityId = 1,
+                    DataCollection = 1,
+                    EmailSent = 0,
+                    Status = 0,
+                    OutputQuantity = 1,
+                    PlanTypeId = 1,
+                    SampleIndex = 5,
+                    SampleQuantity = 5,
+                    UserId = 1,
+                    Notes = "Note 1"
                 },
                 new() {
-                    IntID = 8,
-                    IntProductionID = 1,
-                    IntJobID = 1,
-                    IntCharacteristicID = 2,
-                    IntLineID = 1,
-                    VarCharacteristicValue = "6",
-                    DtTimeMeasure = DateTime.Now.AddDays(-9).AddMinutes(8),
-                    DtTimeStamp = DateTime.Now.AddDays(-9).AddMinutes(8),
-                    IntMoldID = 1,
-                    IntCavityID = 1,
-                    IntDataCollection = 1,
-                    IntEmailSent = 0,
-                    IntOKNG = 0,
-                    IntOutputQty = 1,
-                    IntPlanTypeID = 1,
-                    IntSampleIndex = 5,
-                    IntSampleQty = 5,
-                    IntUserID = 1,
-                    StrOutputNotes = "Note 1"
+                    Id = 8,
+                    ProductionId = 1,
+                    JobId = 1,
+                    CharacteristicId = 2,
+                    LineId = 1,
+                    CharacteristicValue = "6",
+                    UploadedDateTime = DateTime.Now.AddDays(-9).AddMinutes(8),
+                    MeasuredDateTime = DateTime.Now.AddDays(-9).AddMinutes(8),
+                    MoldId = 1,
+                    CavityId = 1,
+                    DataCollection = 1,
+                    EmailSent = 0,
+                    Status = 0,
+                    OutputQuantity = 1,
+                    PlanTypeId = 1,
+                    SampleIndex = 5,
+                    SampleQuantity = 5,
+                    UserId = 1,
+                    Notes = "Note 1"
                 },
                 new() {
-                    IntID = 9,
-                    IntProductionID = 1,
-                    IntJobID = 1,
-                    IntCharacteristicID = 1,
-                    IntLineID = 1,
-                    VarCharacteristicValue = "18",
-                    DtTimeMeasure = DateTime.Now.AddDays(-9).AddMinutes(9),
-                    DtTimeStamp = DateTime.Now.AddDays(-9).AddMinutes(9),
-                    IntMoldID = 1,
-                    IntCavityID = 1,
-                    IntDataCollection = 1,
-                    IntEmailSent = 0,
-                    IntOKNG = 0,
-                    IntOutputQty = 1,
-                    IntPlanTypeID = 1,
-                    IntSampleIndex = 5,
-                    IntSampleQty = 5,
-                    IntUserID = 1,
-                    StrOutputNotes = "Note 1"
+                    Id = 9,
+                    ProductionId = 1,
+                    JobId = 1,
+                    CharacteristicId = 1,
+                    LineId = 1,
+                    CharacteristicValue = "18",
+                    UploadedDateTime = DateTime.Now.AddDays(-9).AddMinutes(9),
+                    MeasuredDateTime = DateTime.Now.AddDays(-9).AddMinutes(9),
+                    MoldId = 1,
+                    CavityId = 1,
+                    DataCollection = 1,
+                    EmailSent = 0,
+                    Status = 0,
+                    OutputQuantity = 1,
+                    PlanTypeId = 1,
+                    SampleIndex = 5,
+                    SampleQuantity = 5,
+                    UserId = 1,
+                    Notes = "Note 1"
                 },
                 new() {
-                    IntID = 10,
-                    IntProductionID = 1,
-                    IntJobID = 1,
-                    IntCharacteristicID = 2,
-                    IntLineID = 1,
-                    VarCharacteristicValue = "14",
-                    DtTimeMeasure = DateTime.Now.AddDays(-9).AddMinutes(10),
-                    DtTimeStamp = DateTime.Now.AddDays(-9).AddMinutes(10),
-                    IntMoldID = 1,
-                    IntCavityID = 1,
-                    IntDataCollection = 1,
-                    IntEmailSent = 0,
-                    IntOKNG = 0,
-                    IntOutputQty = 1,
-                    IntPlanTypeID = 1,
-                    IntSampleIndex = 5,
-                    IntSampleQty = 5,
-                    IntUserID = 1,
-                    StrOutputNotes = "Note 1"
+                    Id = 10,
+                    ProductionId = 1,
+                    JobId = 1,
+                    CharacteristicId = 2,
+                    LineId = 1,
+                    CharacteristicValue = "14",
+                    UploadedDateTime = DateTime.Now.AddDays(-9).AddMinutes(10),
+                    MeasuredDateTime = DateTime.Now.AddDays(-9).AddMinutes(10),
+                    MoldId = 1,
+                    CavityId = 1,
+                    DataCollection = 1,
+                    EmailSent = 0,
+                    Status = 0,
+                    OutputQuantity = 1,
+                    PlanTypeId = 1,
+                    SampleIndex = 5,
+                    SampleQuantity = 5,
+                    UserId = 1,
+                    Notes = "Note 1"
                 },
             });
         }
