@@ -9,7 +9,7 @@ namespace QMSWebApplication.BackendServer.Data.Entities
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("Id")]
-        public required int Id { get; set; }
+        public int Id { get; set; }
 
         [Column("Name", TypeName = "nvarchar(100)")]
         public required string Name { get; set; }
@@ -17,10 +17,19 @@ namespace QMSWebApplication.BackendServer.Data.Entities
         [Column("Url", TypeName = "nvarchar(100)")]
         public required string Url { get; set; }
 
-        [Column("SortOrder")]
-        public int? SortOrder { get; set; }
+        [Column("OrderNumber")]
+        public int? OrderNumber { get; set; }
 
         [Column("ParentId")]
         public int? ParentId { get; set; }
+
+        [Column("UploadedDateTime")]
+        public DateTimeOffset? UploadedDateTime { get; set; }
+
+        [Column("ModifiedDateTime")]
+        public DateTimeOffset? ModifiedDateTime { get; set; }
+
+        [Column("Enabled")]
+        public bool Enabled { get; set; } = true;
     }
 }

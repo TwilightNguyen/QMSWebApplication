@@ -69,382 +69,420 @@ namespace QMSWebApplication.BackendServer.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "tbCharacteristic",
+                name: "Characteristics",
                 columns: table => new
                 {
-                    intID = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    strCharacteristicName = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
-                    intMeaTypeID = table.Column<int>(type: "int", nullable: true),
-                    intProcessID = table.Column<int>(type: "int", nullable: true),
-                    intCharacteristicType = table.Column<int>(type: "int", nullable: true),
-                    strCharacteristicUnit = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
-                    boolDeleted = table.Column<bool>(type: "bit", nullable: true),
-                    intDefectRateLimit = table.Column<int>(type: "int", nullable: true),
-                    intEventEnable = table.Column<int>(type: "int", nullable: true),
-                    intEmailEventModel = table.Column<int>(type: "int", nullable: true),
-                    intDecimals = table.Column<int>(type: "int", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    MeaTypeId = table.Column<int>(type: "int", nullable: true),
+                    ProcessId = table.Column<int>(type: "int", nullable: false),
+                    DataType = table.Column<int>(type: "int", nullable: true),
+                    Unit = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
+                    Enabled = table.Column<bool>(type: "bit", nullable: true),
+                    DefectRateLimit = table.Column<int>(type: "int", nullable: true),
+                    EmailEventModel = table.Column<int>(type: "int", nullable: true),
+                    Decimals = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_tbCharacteristic", x => x.intID);
+                    table.PrimaryKey("PK_Characteristics", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "tbEmailServer",
+                name: "CommandInFuntions",
                 columns: table => new
                 {
-                    intID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    strEmailAddress = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    strDisplayName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    strPassword = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    strSMTPHost = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    intSMTPPort = table.Column<int>(type: "int", nullable: true),
-                    boolEnabledSSL = table.Column<bool>(type: "bit", nullable: true)
+                    CommandId = table.Column<int>(type: "int", nullable: false),
+                    FunctionId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_tbEmailServer", x => x.intID);
+                    table.PrimaryKey("PK_CommandInFuntions", x => new { x.CommandId, x.FunctionId });
                 });
 
             migrationBuilder.CreateTable(
-                name: "tbEventLog",
+                name: "Commands",
                 columns: table => new
                 {
-                    intEventID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    dtEventTime = table.Column<DateTime>(type: "datetime", nullable: true),
-                    strEventCode = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
-                    strEvent = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
-                    strStation = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true)
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(100)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_tbEventLog", x => x.intEventID);
+                    table.PrimaryKey("PK_Commands", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "tbEventRoles",
+                name: "EmailServer",
                 columns: table => new
                 {
-                    intID = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    intCharacteristicID = table.Column<int>(type: "int", nullable: true),
-                    strRoleID = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true)
+                    EmailAddress = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    DisplayName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Password = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    SMTPHost = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    SMTPPort = table.Column<int>(type: "int", nullable: true),
+                    EnabledSSL = table.Column<bool>(type: "bit", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_tbEventRoles", x => x.intID);
+                    table.PrimaryKey("PK_EmailServer", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "tbInspectionPlan",
+                name: "EventLogs",
                 columns: table => new
                 {
-                    intID = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    strInspPlanName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    intAreaID = table.Column<int>(type: "int", nullable: true),
-                    dtCreateTime = table.Column<DateTime>(type: "datetime", nullable: true),
-                    dtUpdateTime = table.Column<DateTime>(type: "datetime", nullable: true),
-                    boolDeleted = table.Column<bool>(type: "bit", nullable: true)
+                    EventTime = table.Column<DateTimeOffset>(type: "DateTimeOffset(3)", nullable: false),
+                    EventCode = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    Station = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_tbInspectionPlan", x => x.intID);
+                    table.PrimaryKey("PK_EventLogs", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "tbInspectionPlanData",
+                name: "EventRoles",
                 columns: table => new
                 {
-                    intID = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    intInspPlanSubID = table.Column<int>(type: "int", nullable: true),
-                    intCharacteristicID = table.Column<int>(type: "int", nullable: true),
-                    ftLSL = table.Column<double>(type: "float", nullable: true),
-                    ftUSL = table.Column<double>(type: "float", nullable: true),
-                    ftLCL = table.Column<double>(type: "float", nullable: true),
-                    ftUCL = table.Column<double>(type: "float", nullable: true),
-                    boolSPCChart = table.Column<bool>(type: "bit", nullable: true),
-                    boolDataEntry = table.Column<bool>(type: "bit", nullable: true),
-                    intPlanState = table.Column<int>(type: "int", nullable: true),
-                    ftCpkMax = table.Column<double>(type: "float", nullable: true),
-                    ftCpkMin = table.Column<double>(type: "float", nullable: true),
-                    boolSpkControl = table.Column<bool>(type: "bit", nullable: true),
-                    strSampleSize = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
-                    ftPercentControlLimit = table.Column<double>(type: "float", nullable: true),
-                    boolDeleted = table.Column<bool>(type: "bit", nullable: true)
+                    CharacteristicId = table.Column<int>(type: "int", nullable: true),
+                    RoleId = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_tbInspectionPlanData", x => x.intID);
+                    table.PrimaryKey("PK_EventRoles", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "tbInspectionPlanSub",
+                name: "Functions",
                 columns: table => new
                 {
-                    intID = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    intInspPlanID = table.Column<int>(type: "int", nullable: false),
-                    intPlanTypeID = table.Column<int>(type: "int", nullable: false),
-                    boolDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    dtCreateTime = table.Column<DateTime>(type: "datetime", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(100)", nullable: false),
+                    Url = table.Column<string>(type: "nvarchar(100)", nullable: false),
+                    SortOrder = table.Column<int>(type: "int", nullable: true),
+                    ParentId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_tbInspectionPlanSub", x => x.intID);
+                    table.PrimaryKey("PK_Functions", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "tbInspectionPlanTracking",
+                name: "InspectionPlanData",
                 columns: table => new
                 {
-                    intID = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    intInspPlanID = table.Column<int>(type: "int", nullable: true),
-                    intCharacteristicID = table.Column<int>(type: "int", nullable: true),
-                    intPlanState = table.Column<int>(type: "int", nullable: true),
-                    dtCreateTime = table.Column<DateTime>(type: "datetime", nullable: true),
-                    intUserID = table.Column<int>(type: "int", nullable: true)
+                    InspPlanSubId = table.Column<int>(type: "int", nullable: true),
+                    CharacteristicId = table.Column<int>(type: "int", nullable: true),
+                    LSL = table.Column<double>(type: "float", nullable: true),
+                    USL = table.Column<double>(type: "float", nullable: true),
+                    LCL = table.Column<double>(type: "float", nullable: true),
+                    UCL = table.Column<double>(type: "float", nullable: true),
+                    EnabledSPCChart = table.Column<bool>(type: "bit", nullable: true),
+                    DataEntry = table.Column<bool>(type: "bit", nullable: true),
+                    CpkMax = table.Column<double>(type: "float", nullable: true),
+                    CpkMin = table.Column<double>(type: "float", nullable: true),
+                    EnabledCpkControl = table.Column<bool>(type: "bit", nullable: true),
+                    Notes = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
+                    PercentControlLimit = table.Column<double>(type: "float", nullable: true),
+                    Enabled = table.Column<bool>(type: "bit", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_tbInspectionPlanTracking", x => x.intID);
+                    table.PrimaryKey("PK_InspectionPlanData", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "tbInspectionPlanType",
+                name: "InspectionPlans",
                 columns: table => new
                 {
-                    intID = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    strPlanTypeName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    AreaId = table.Column<int>(type: "int", nullable: true),
+                    UploadedDateTime = table.Column<DateTimeOffset>(type: "DateTimeOffset(3)", nullable: true),
+                    ModifiedDateTime = table.Column<DateTimeOffset>(type: "DateTimeOffset(3)", nullable: true),
+                    Version = table.Column<int>(type: "int", nullable: true),
+                    Enabled = table.Column<bool>(type: "bit", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_tbInspectionPlanType", x => x.intID);
+                    table.PrimaryKey("PK_InspectionPlans", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "tbJobData",
+                name: "InspectionPlanSubs",
                 columns: table => new
                 {
-                    intID = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    intAreaID = table.Column<int>(type: "int", nullable: true),
-                    intProductID = table.Column<int>(type: "int", nullable: true),
-                    strJobCode = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    strPOCode = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    strSOCode = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    intJobQty = table.Column<int>(type: "int", nullable: true),
-                    intOutputQty = table.Column<int>(type: "int", nullable: true),
-                    dtCreateTime = table.Column<DateTime>(type: "datetime", nullable: true),
-                    intJobDecisionID = table.Column<int>(type: "int", nullable: true),
-                    intUserID = table.Column<int>(type: "int", nullable: true),
-                    boolDeleted = table.Column<bool>(type: "bit", nullable: true)
+                    InspPlanId = table.Column<int>(type: "int", nullable: false),
+                    PlanTypeId = table.Column<int>(type: "int", nullable: false),
+                    PlanState = table.Column<int>(type: "int", nullable: false),
+                    UploadedDateTime = table.Column<DateTimeOffset>(type: "DateTimeOffset", nullable: false),
+                    Enabled = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_tbJobData", x => x.intID);
+                    table.PrimaryKey("PK_InspectionPlanSubs", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "tbJobDecision",
+                name: "InspectionPlanTracking",
                 columns: table => new
                 {
-                    intID = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    strDecision = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
-                    intColorCode = table.Column<int>(type: "int", nullable: false)
+                    InspPlanId = table.Column<int>(type: "int", nullable: true),
+                    CharacteristicId = table.Column<int>(type: "int", nullable: true),
+                    PlanState = table.Column<int>(type: "int", nullable: true),
+                    PlanTypeId = table.Column<int>(type: "int", nullable: true),
+                    UploadedDateTime = table.Column<DateTimeOffset>(type: "DateTimeOffset(3)", nullable: true),
+                    UserId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_tbJobDecision", x => x.intID);
+                    table.PrimaryKey("PK_InspectionPlanTracking", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "tbMeasData3_01",
+                name: "InspectionPlanTypes",
                 columns: table => new
                 {
-                    intID = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    intCharacteristicID = table.Column<int>(type: "int", nullable: true),
-                    varCharacteristicValue = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true),
-                    varCharacteristicRange = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true),
-                    dtTimeStamp = table.Column<DateTime>(type: "datetime", nullable: true),
-                    intDataCollection = table.Column<int>(type: "int", nullable: true),
-                    dtTimeMeasure = table.Column<DateTime>(type: "datetime", nullable: true),
-                    intJobID = table.Column<int>(type: "int", nullable: true),
-                    intProductionID = table.Column<int>(type: "int", nullable: true),
-                    intLineID = table.Column<int>(type: "int", nullable: true),
-                    intUserID = table.Column<int>(type: "int", nullable: true),
-                    intOutputQty = table.Column<int>(type: "int", nullable: true),
-                    intSampleIndex = table.Column<int>(type: "int", nullable: true),
-                    intOKNG = table.Column<int>(type: "int", nullable: true),
-                    intEmailSent = table.Column<int>(type: "int", nullable: true),
-                    intPlanTypeID = table.Column<int>(type: "int", nullable: true),
-                    strOutputNotes = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    intSampleQty = table.Column<int>(type: "int", nullable: true),
-                    intMoldID = table.Column<int>(type: "int", nullable: true),
-                    intCavityID = table.Column<int>(type: "int", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_tbMeasData3_01", x => x.intID);
+                    table.PrimaryKey("PK_InspectionPlanTypes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "tbMeasureType",
+                name: "JobDecisions",
                 columns: table => new
                 {
-                    intID = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    strMeaType = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true)
+                    Decision = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
+                    ColorCode = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_tbMeasureType", x => x.intID);
+                    table.PrimaryKey("PK_JobDecisions", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "tbProcess",
+                name: "Jobs",
                 columns: table => new
                 {
-                    intID = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    strProcessName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    intAreaID = table.Column<int>(type: "int", nullable: true)
+                    AreaId = table.Column<int>(type: "int", nullable: true),
+                    ProductId = table.Column<int>(type: "int", nullable: true),
+                    JobCode = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    POCode = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    SOCode = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    PlannedQuantity = table.Column<int>(type: "int", nullable: true),
+                    OutputQuantity = table.Column<int>(type: "int", nullable: true),
+                    UploadedDateTime = table.Column<DateTimeOffset>(type: "DateTimeOffset(3)", nullable: true),
+                    JobDecisionId = table.Column<int>(type: "int", nullable: true),
+                    UserId = table.Column<int>(type: "int", nullable: true),
+                    Enabled = table.Column<bool>(type: "bit", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_tbProcess", x => x.intID);
+                    table.PrimaryKey("PK_Jobs", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "tbProcessLine",
+                name: "MeasureType",
                 columns: table => new
                 {
-                    intID = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    strProcessLineName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    strProcessLineCode = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    intAreaID = table.Column<int>(type: "int", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_tbProcessLine", x => x.intID);
+                    table.PrimaryKey("PK_MeasureType", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "tbProductionArea",
+                name: "Process",
                 columns: table => new
                 {
-                    intID = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    strNameArea = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    AreaId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_tbProductionArea", x => x.intID);
+                    table.PrimaryKey("PK_Process", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "tbProductionData",
+                name: "ProcessLine",
                 columns: table => new
                 {
-                    intID = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    intLineID = table.Column<int>(type: "int", nullable: true),
-                    dtStartTime = table.Column<DateTime>(type: "datetime", nullable: true),
-                    dtEndTime = table.Column<DateTime>(type: "datetime", nullable: true),
-                    intJobID = table.Column<int>(type: "int", nullable: true),
-                    boolDeleted = table.Column<bool>(type: "bit", nullable: true),
-                    intUserID = table.Column<int>(type: "int", nullable: true),
-                    strNotes = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    dtProductionDate = table.Column<DateTime>(type: "datetime", nullable: true),
-                    intProductionQty = table.Column<int>(type: "int", nullable: true),
-                    strLotInform = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    strMaterialInform = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    intCNCLatheMachine = table.Column<int>(type: "int", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    LineCode = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    ProcessId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_tbProductionData", x => x.intID);
+                    table.PrimaryKey("PK_ProcessLine", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "tbProductName",
+                name: "Product",
                 columns: table => new
                 {
-                    intID = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    strNameProduct = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    intAreaID = table.Column<int>(type: "int", nullable: true),
-                    intInspPlanID = table.Column<int>(type: "int", nullable: true),
-                    boolDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    strModelInternal = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    strCustomerName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    strNotes = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    intVialFixture = table.Column<int>(type: "int", nullable: true),
-                    strDescription = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    intMoldQty = table.Column<int>(type: "int", nullable: true),
-                    intCavityQty = table.Column<int>(type: "int", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    AreaId = table.Column<int>(type: "int", nullable: true),
+                    InspPlanId = table.Column<int>(type: "int", nullable: true),
+                    Enabled = table.Column<bool>(type: "bit", nullable: false),
+                    ModelInternal = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    CustomerName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Notes = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    VialFixture = table.Column<int>(type: "int", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    MoldQuantity = table.Column<int>(type: "int", nullable: true),
+                    CavityQuantity = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_tbProductName", x => x.intID);
+                    table.PrimaryKey("PK_Product", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "tbShift",
+                name: "ProductionAreas",
                 columns: table => new
                 {
-                    intID = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    StrNameShift = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    dtStartTime = table.Column<TimeSpan>(type: "time", nullable: true),
-                    dtEndTime = table.Column<TimeSpan>(type: "time", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_tbShift", x => x.intID);
+                    table.PrimaryKey("PK_ProductionAreas", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "tbTVDisplay",
+                name: "ProductionData",
                 columns: table => new
                 {
-                    intID = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    strTVName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    strProductionID = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    strCharacteristicID = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    strPlanTypeID = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    strMoldID = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    strCavityID = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true)
+                    LineId = table.Column<int>(type: "int", nullable: true),
+                    StartTime = table.Column<DateTimeOffset>(type: "DateTimeOffset(3)", nullable: true),
+                    EndTime = table.Column<DateTimeOffset>(type: "DateTimeOffset(3)", nullable: true),
+                    JobId = table.Column<int>(type: "int", nullable: true),
+                    ProductionDate = table.Column<DateTimeOffset>(type: "DateTimeOffset(3)", nullable: true),
+                    PlannedQuantity = table.Column<int>(type: "int", nullable: true),
+                    LotInform = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    MaterialInform = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    CNCLatheMachine = table.Column<int>(type: "int", nullable: true),
+                    UserId = table.Column<int>(type: "int", nullable: true),
+                    Notes = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Ennabled = table.Column<bool>(type: "bit", nullable: true),
+                    UploadedDateTime = table.Column<DateTimeOffset>(type: "DateTimeOffset(3)", nullable: false),
+                    ModifiedDateTime = table.Column<DateTimeOffset>(type: "DateTimeOffset(3)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_tbTVDisplay", x => x.intID);
+                    table.PrimaryKey("PK_ProductionData", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "tbWebSession",
+                name: "Samples",
                 columns: table => new
                 {
-                    intID = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    strSessionID = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    strIpAddress = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    dtStartTime = table.Column<DateTime>(type: "datetime", nullable: true),
-                    dtEndTime = table.Column<DateTime>(type: "datetime", nullable: true)
+                    CharacteristicId = table.Column<int>(type: "int", nullable: true),
+                    CharacteristicValue = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true),
+                    CharacteristicRange = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true),
+                    UploadedDateTime = table.Column<DateTimeOffset>(type: "DateTimeOffset(3)", nullable: true),
+                    DataCollection = table.Column<int>(type: "int", nullable: true),
+                    MeasuredDateTime = table.Column<DateTimeOffset>(type: "DateTimeOffset(3)", nullable: true),
+                    JobId = table.Column<int>(type: "int", nullable: true),
+                    ProductionId = table.Column<int>(type: "int", nullable: true),
+                    LineId = table.Column<int>(type: "int", nullable: true),
+                    UserId = table.Column<int>(type: "int", nullable: true),
+                    OutputQuantity = table.Column<int>(type: "int", nullable: true),
+                    SampleIndex = table.Column<int>(type: "int", nullable: true),
+                    Status = table.Column<int>(type: "int", nullable: true),
+                    EmailSent = table.Column<int>(type: "int", nullable: true),
+                    PlanTypeId = table.Column<int>(type: "int", nullable: true),
+                    Notes = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    SampleQuantity = table.Column<int>(type: "int", nullable: true),
+                    MoldId = table.Column<int>(type: "int", nullable: true),
+                    CavityId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_tbWebSession", x => x.intID);
+                    table.PrimaryKey("PK_Samples", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Shift",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    StartTime = table.Column<TimeSpan>(type: "time", nullable: true),
+                    EndTime = table.Column<TimeSpan>(type: "time", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Shift", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TVDisplay",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TVDisplay", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "WebSession",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SessionId = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    IpAddress = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    StartTime = table.Column<DateTimeOffset>(type: "DateTimeOffset(3)", nullable: true),
+                    EndTime = table.Column<DateTimeOffset>(type: "DateTimeOffset(3)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WebSession", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -612,67 +650,76 @@ namespace QMSWebApplication.BackendServer.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "tbCharacteristic");
+                name: "Characteristics");
 
             migrationBuilder.DropTable(
-                name: "tbEmailServer");
+                name: "CommandInFuntions");
 
             migrationBuilder.DropTable(
-                name: "tbEventLog");
+                name: "Commands");
 
             migrationBuilder.DropTable(
-                name: "tbEventRoles");
+                name: "EmailServer");
 
             migrationBuilder.DropTable(
-                name: "tbInspectionPlan");
+                name: "EventLogs");
 
             migrationBuilder.DropTable(
-                name: "tbInspectionPlanData");
+                name: "EventRoles");
 
             migrationBuilder.DropTable(
-                name: "tbInspectionPlanSub");
+                name: "Functions");
 
             migrationBuilder.DropTable(
-                name: "tbInspectionPlanTracking");
+                name: "InspectionPlanData");
 
             migrationBuilder.DropTable(
-                name: "tbInspectionPlanType");
+                name: "InspectionPlans");
 
             migrationBuilder.DropTable(
-                name: "tbJobData");
+                name: "InspectionPlanSubs");
 
             migrationBuilder.DropTable(
-                name: "tbJobDecision");
+                name: "InspectionPlanTracking");
 
             migrationBuilder.DropTable(
-                name: "tbMeasData3_01");
+                name: "InspectionPlanTypes");
 
             migrationBuilder.DropTable(
-                name: "tbMeasureType");
+                name: "JobDecisions");
 
             migrationBuilder.DropTable(
-                name: "tbProcess");
+                name: "Jobs");
 
             migrationBuilder.DropTable(
-                name: "tbProcessLine");
+                name: "MeasureType");
 
             migrationBuilder.DropTable(
-                name: "tbProductionArea");
+                name: "Process");
 
             migrationBuilder.DropTable(
-                name: "tbProductionData");
+                name: "ProcessLine");
 
             migrationBuilder.DropTable(
-                name: "tbProductName");
+                name: "Product");
 
             migrationBuilder.DropTable(
-                name: "tbShift");
+                name: "ProductionAreas");
 
             migrationBuilder.DropTable(
-                name: "tbTVDisplay");
+                name: "ProductionData");
 
             migrationBuilder.DropTable(
-                name: "tbWebSession");
+                name: "Samples");
+
+            migrationBuilder.DropTable(
+                name: "Shift");
+
+            migrationBuilder.DropTable(
+                name: "TVDisplay");
+
+            migrationBuilder.DropTable(
+                name: "WebSession");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

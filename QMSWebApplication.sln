@@ -15,13 +15,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "resources", "resources", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{9D33FA8E-8173-436C-9B0F-4892C9DFEE21}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QMSWebApplication.BackendServer.UnitTest", "test\YudaSPCWebApplication.BackendServer.UnitTests\QMSWebApplication.BackendServer.UnitTest.csproj", "{161D3FB0-21BC-424A-89AE-FBA3B75AE925}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QMSWebApplication.BackendServer", "src\QMSWebApplication.BackendServer\QMSWebApplication.BackendServer.csproj", "{5B6E737E-5DDD-8AF4-ECD9-EAB18427FBB8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QMSWebApplication.ViewModels", "src\QMSWebApplication.ViewModels\QMSWebApplication.ViewModels.csproj", "{FB9FF52B-A084-6F70-80C5-4EE0B8CA29AB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QMSWebApplication.WebPortal", "src\QMSWebApplication.WebPortal\QMSWebApplication.WebPortal.csproj", "{991BBC57-7059-EC5C-86D0-4EAA5CF69FB8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QMSWebApplication.BackendServer.UnitTest", "test\QMSWebApplication.BackendServer.UnitTests\QMSWebApplication.BackendServer.UnitTest.csproj", "{DFD0527E-A5A7-8890-FA7E-3E01B69D29D3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{161D3FB0-21BC-424A-89AE-FBA3B75AE925}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{161D3FB0-21BC-424A-89AE-FBA3B75AE925}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{161D3FB0-21BC-424A-89AE-FBA3B75AE925}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{161D3FB0-21BC-424A-89AE-FBA3B75AE925}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5B6E737E-5DDD-8AF4-ECD9-EAB18427FBB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5B6E737E-5DDD-8AF4-ECD9-EAB18427FBB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5B6E737E-5DDD-8AF4-ECD9-EAB18427FBB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -45,15 +41,19 @@ Global
 		{991BBC57-7059-EC5C-86D0-4EAA5CF69FB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{991BBC57-7059-EC5C-86D0-4EAA5CF69FB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{991BBC57-7059-EC5C-86D0-4EAA5CF69FB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DFD0527E-A5A7-8890-FA7E-3E01B69D29D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFD0527E-A5A7-8890-FA7E-3E01B69D29D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DFD0527E-A5A7-8890-FA7E-3E01B69D29D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DFD0527E-A5A7-8890-FA7E-3E01B69D29D3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{161D3FB0-21BC-424A-89AE-FBA3B75AE925} = {9D33FA8E-8173-436C-9B0F-4892C9DFEE21}
 		{5B6E737E-5DDD-8AF4-ECD9-EAB18427FBB8} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{FB9FF52B-A084-6F70-80C5-4EE0B8CA29AB} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{991BBC57-7059-EC5C-86D0-4EAA5CF69FB8} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{DFD0527E-A5A7-8890-FA7E-3E01B69D29D3} = {9D33FA8E-8173-436C-9B0F-4892C9DFEE21}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A9C37076-2807-4508-8B5D-89B7DC8702A1}

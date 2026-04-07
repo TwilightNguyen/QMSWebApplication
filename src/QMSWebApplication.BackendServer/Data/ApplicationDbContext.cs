@@ -21,15 +21,16 @@ namespace QMSWebApplication.BackendServer.Data
         public virtual DbSet<ProcessLines> ProcessLines { get; set; }
         public virtual DbSet<Processes> Processes { get; set; }
         public virtual DbSet<Characteristics> Characteristics { get; set; }
-        public virtual DbSet<Products> Products { get; set; }
-        //public virtual DbSet<Role> Roles { get; set; }
+        public virtual DbSet<Products> Products { get; set; } 
         public virtual DbSet<JobDecisions> JobDecisions { get; set; }
-        public virtual DbSet<Shifts> Shifts { get; set; }
-        //public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Shifts> Shifts { get; set; } 
         public virtual DbSet<Jobs> JobDatas { get; set; }
         public virtual DbSet<EventRoles> AlarmEvents { get; set; }
         public virtual DbSet<EmailServer> EmailServers { get; set; }
         public virtual DbSet<WebSession> WebSessions { get; set; }
+        public virtual DbSet<Functions> Functions { get; set; }
+        public virtual DbSet<Commands> Commands { get; set; }
+        public virtual DbSet<CommandInFuntions> CommandInFuntions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
