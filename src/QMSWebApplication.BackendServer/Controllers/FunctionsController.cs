@@ -239,6 +239,7 @@ namespace QMSWebApplication.BackendServer.Controllers
                     Url = function.Url,
                     UploadedDateTime = function.UploadedDateTime,
                     ModifiedDateTime = function.ModifiedDateTime,
+                    DisplayOrder = function.DisplayOrder,
                     Enabled = function.Enabled,
                 });
             }
@@ -275,12 +276,13 @@ namespace QMSWebApplication.BackendServer.Controllers
                     Url = function.Url,
                     UploadedDateTime = function.UploadedDateTime,
                     ModifiedDateTime = function.ModifiedDateTime,
+                    DisplayOrder = function.DisplayOrder,
                     Enabled = function.Enabled,
                 });
             }
             else
             {
-                return BadRequest("Failed to delete inspection plan.");
+                return BadRequest("Failed to delete function.");
             }
         }
     }
