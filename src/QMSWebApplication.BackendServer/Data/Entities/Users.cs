@@ -4,37 +4,11 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace QMSWebApplication.BackendServer.Data.Entities
-{  
+{
+    [Table("Users")]  
+    
     public class User : IdentityUser<string>
     {
-        //public User()
-        //{
-        //    // Constructor logic (if any) goes here
-        //}
-        //public User(string id, string userName, string email, 
-        //    int userId, string roleId, string password, string fullName, string department,
-        //    string staffId, DateTime lastActivityTime, int enable, string selectedAreaId
-        //)
-        //{
-        //    // Constructor logic (if any) goes here
-        //    Id = id;
-        //    UserName = userName;
-        //    Email = email;
-        //    NormalizedUserName = userName.ToUpperInvariant();
-        //    NormalizedEmail = email.ToUpperInvariant();
-
-        //    IntUserID = userId;
-        //    StrFullName = fullName;
-        //    StrRoleID = roleId;
-        //    StrPassword = password;
-        //    StrDepartment = department;
-        //    StrStaffID = staffId;
-        //    DtLastActivityTime = lastActivityTime;
-        //    IntEnable = enable;
-        //    StrSelectedAreaID = selectedAreaId;
-        //    StrEmailAddress = email;
-        //}
-
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("intUserID")]
         public int IntUserID { get; set; }

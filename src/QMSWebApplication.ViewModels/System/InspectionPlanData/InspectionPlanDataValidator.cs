@@ -7,11 +7,11 @@ namespace QMSWebApplication.ViewModels.System.InspectionPlanData
         public InspectionPlanDataValidator() { 
             RuleFor(RuleFor => RuleFor.InspPlanSubId)
                 .NotNull().WithMessage("InspPlanSub Id is required.")
-                .GreaterThan(0).WithMessage("InspPlanSubId must be a positive integer.");
+                .GreaterThan(0).WithMessage("InspPlanSub Id must be a positive integer.");
 
             RuleFor(RuleFor => RuleFor.CharacteristicId)
                 .NotNull().WithMessage("Characteristic Id is required.")
-                .GreaterThan(0).WithMessage("CharacteristicId must be a positive integer.");
+                .GreaterThan(0).WithMessage("Characteristic Id must be a positive integer.");
 
             RuleFor(RuleFor => RuleFor.SampleSize)
                 .MaximumLength(50).WithMessage("SampleSize must not exceed 50 characters.");

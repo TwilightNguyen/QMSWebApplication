@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace QMSWebApplication.BackendServer.Data.Entities
 {
+    [Table("Roles")]
     public class Roles : IdentityRole<string>
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

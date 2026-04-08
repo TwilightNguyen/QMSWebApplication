@@ -677,5 +677,15 @@ namespace QMSWebApplication.BackendServer.UnitTest
             });
             context.SaveChanges();
         }
+
+        public static void SeedCommands(ApplicationDbContext context) {
+            context.Commands.AddRange(new List<Commands>
+            {
+                new() { Id = 1, Name = "Command 1", Notes = "Command notes 1", DisplayOrder = 1, UploadedDateTime = DateTimeOffset.Now, ModifiedDateTime = null, Enabled = true },
+                new() { Id = 2, Name = "Command 2", Notes = "Command notes 2", DisplayOrder = 2, UploadedDateTime = DateTimeOffset.Now, ModifiedDateTime = null, Enabled = true },
+                new() { Id = 3, Name = "Command 3", Notes = "Command notes 3", DisplayOrder = 3, UploadedDateTime = DateTimeOffset.Now, ModifiedDateTime = DateTimeOffset.Now, Enabled = false }
+            });
+            context.SaveChanges();
+        }
     }
 }

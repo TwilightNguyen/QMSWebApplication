@@ -1,15 +1,17 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace QMSWebApplication.BackendServer.Data.Entities
 {
     [Table("Permissions")]
+    [PrimaryKey(nameof(CommandId), nameof(FunctionId), nameof(RoleId))]
     public class Permissions
     {
 
         [Key]
-        [Column("FunciontId")]
-        public required int FunciontId { get; set; }
+        [Column("FunctionId")]
+        public required int FunctionId { get; set; }
 
         [Key]
         [Column("RoleId")]
