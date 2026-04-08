@@ -39,22 +39,22 @@ namespace QMSWebApplication.BackendServer.Data
             base.OnModelCreating(modelBuilder);
 
             // Đổi tên các bảng Identity
-            modelBuilder.Entity<IdentityUser<string>>(entity => { entity.ToTable("Users"); });
-            modelBuilder.Entity<IdentityRole<string>>(entity => { entity.ToTable("Roles"); });
+            //modelBuilder.Entity<IdentityUser<string>>(entity => { entity.ToTable("Users"); });
+            //modelBuilder.Entity<IdentityRole<string>>(entity => { entity.ToTable("Roles"); });
             modelBuilder.Entity<IdentityUserRole<string>>(entity => { entity.ToTable("UserRoles"); });
             modelBuilder.Entity<IdentityUserClaim<string>>(entity => { entity.ToTable("UserClaims"); });
             modelBuilder.Entity<IdentityUserLogin<string>>(entity => { entity.ToTable("UserLogins"); });
             modelBuilder.Entity<IdentityRoleClaim<string>>(entity => { entity.ToTable("RoleClaims"); });
             modelBuilder.Entity<IdentityUserToken<string>>(entity => { entity.ToTable("UserTokens"); });
 
-            //modelBuilder.Entity<Roles>()
-            //.Property(r => r.IntRoleID)
-            //.ValueGeneratedNever(); // Prevent identity generation on this property
+            modelBuilder.Entity<Roles>()
+            .Property(r => r.IntRoleID)
+            .ValueGeneratedNever(); // Prevent identity generation on this property
 
 
-            //modelBuilder.Entity<User>()
-            //.Property(r => r.IntUserID)
-            //.ValueGeneratedNever(); // Prevent identity generation on this property
+            modelBuilder.Entity<User>()
+            .Property(r => r.IntUserID)
+            .ValueGeneratedNever(); // Prevent identity generation on this property
 
             modelBuilder.HasSequence("KnowledgeBaseSepence");
         }

@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using QMSWebApplication.BackendServer.Data;
 using QMSWebApplication.BackendServer.Data.Entities;
 using QMSWebApplication.ViewModels;
+using QMSWebApplication.ViewModels.System.Command;
 using QMSWebApplication.ViewModels.System.Function;
 using QMSWebApplication.ViewModels.System.InspectionPlan;
 
@@ -283,6 +284,120 @@ namespace QMSWebApplication.BackendServer.Controllers
             else
             {
                 return BadRequest("Failed to delete function.");
+            }
+        }
+
+
+        /// <summary>
+        /// Url: /api/functions/{FunctionId}/commands
+        /// </summary>
+        /// <returns></returns>
+        /// 
+        [HttpGet("{FunctionId:int}/commands")]
+        public async Task<IActionResult> GetCommands(int FunctionId)
+        {
+            var query = from c in _context.Commands
+                        join cf in _context.CommandInFuntions on c.Id equals cf.CommandId
+                        where cf.FunctionId == FunctionId
+                        select new CommandVm
+                        {
+                            Id = c.Id,
+                            Name = c.Name,
+                            Notes = c.Notes,
+                            UploadedDateTime = c.UploadedDateTime,
+                            ModifiedDateTime = c.ModifiedDateTime,
+                            DisplayOrder = c.DisplayOrder,
+                            Enabled = c.Enabled
+                        };
+
+            return Ok(await query.ToListAsync());
+        }
+
+        /// <summary>
+        /// Url: /api/functions/{FunctionId}/commands/not-in-function
+        /// </summary>
+        /// <returns></returns>
+        /// 
+        [HttpGet("{FunctionId:int}/commands/not-in-function")]
+        public async Task<IActionResult> GetCommandsNotInFunction(int FunctionId)
+        {
+            var query = from c in _context.Commands
+                        join cf in _context.CommandInFuntions on c.Id equals cf.CommandId into cfGroup from cfunc in cfGroup.DefaultIfEmpty()
+                        join f in _context.Functions on cfunc.FunctionId equals f.Id into fGroup from func in fGroup.DefaultIfEmpty()
+                        select new { 
+                            c.Id,
+                            c.Name,
+                            cfunc.FunctionId
+                        };
+
+            query = query.Where(c => c.FunctionId != FunctionId);
+
+            var data = await query.Select(c => new CommandVm
+            {
+                Id = c.Id,
+                Name = c.Name,
+            }).ToListAsync();
+
+            return Ok(data);
+        }
+
+
+        [HttpPost("{FunctionId:int}/commands")]
+        public async Task<IActionResult> AssignCommand(int FunctionId, [FromBody] AssignCommandRequest request)
+        {
+            var commandInFunction = await _context.CommandInFuntions.FindAsync(request.CommandId, request.FunctionId);
+
+            if (commandInFunction != null)
+            {
+                return BadRequest("This command has been assigned to function.");
+            }
+
+            var newCommandInFunction = new CommandInFuntions
+            {
+                CommandId = request.CommandId,
+                FunctionId = request.FunctionId
+            };
+
+            _context.CommandInFuntions.Add(newCommandInFunction);
+            var result = await _context.SaveChangesAsync();
+            if (result > 0)
+            {
+                return CreatedAtAction(
+                    nameof(GetById),
+                    new 
+                    {
+                       CommandId = newCommandInFunction.CommandId,
+                       FunctionId = newCommandInFunction.FunctionId
+                    }, 
+                    request
+                );
+            }
+            else
+            {
+                return BadRequest("Failed to assign command to function.");
+            }
+        }
+
+
+        [HttpDelete("{FunctionId:int}/commands/{CommandId:int}")]
+        public async Task<IActionResult> UnAssignCommand(int FunctionId, int CommandId)
+        {
+            var commandInFunction = await _context.CommandInFuntions.FindAsync(CommandId, FunctionId);
+
+            if (commandInFunction == null)
+            {
+                return NotFound("Command not found in function.");
+            }
+
+            _context.CommandInFuntions.Remove(commandInFunction);
+            var result = await _context.SaveChangesAsync();
+            if (result > 0)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest("Failed to remove command from function.");
             }
         }
     }
